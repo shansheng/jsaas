@@ -35,6 +35,16 @@ public class FilterServletOutputStream extends ServletOutputStream {
     stream.write(b, off, len);
   }
 
+  @Override
+  public boolean isReady() {
+    return false;
+  }
+
+  @Override
+  public void setWriteListener(WriteListener writeListener) {
+
+  }
+
 
 //public boolean isReady() {
 //	// TODO Auto-generated method stub

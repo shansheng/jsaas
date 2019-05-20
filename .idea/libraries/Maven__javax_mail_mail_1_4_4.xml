@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: javax.mail:mail:1.4.4">
     <CLASSES>
-      <root url="jar://D:/maven_repo/javax/mail/mail/1.4.4/mail-1.4.4.jar!/" />
+      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/javax/mail/mail/1.4.4/mail-1.4.4.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://D:/maven_repo/javax/mail/mail/1.4.4/mail-1.4.4-javadoc.jar!/" />
+      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/javax/mail/mail/1.4.4/mail-1.4.4-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://D:/maven_repo/javax/mail/mail/1.4.4/mail-1.4.4-sources.jar!/" />
+      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/javax/mail/mail/1.4.4/mail-1.4.4-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
