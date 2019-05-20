@@ -248,11 +248,11 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.artofsolving</groupId>
-			<artifactId>jodconverter</artifactId>
-			<version>2.2.2</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.artofsolving</groupId>-->
+			<!--<artifactId>jodconverter</artifactId>-->
+			<!--<version>2.2.2</version>-->
+		<!--</dependency>-->
 
 		<dependency>
 			<groupId>com.github.livesense</groupId>
@@ -321,12 +321,12 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.google.code.kaptcha</groupId>
-			<artifactId>kaptcha</artifactId>
-			<version>2.3</version>
-			<classifier>jdk15</classifier>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.google.code.kaptcha</groupId>-->
+			<!--<artifactId>kaptcha</artifactId>-->
+			<!--<version>2.3</version>-->
+			<!--<classifier>jdk15</classifier>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
@@ -417,11 +417,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-		  <groupId>org.activiti</groupId>
-		  <artifactId>activiti-bpmn-model-serial</artifactId>
-		  <version>5.18.0</version>
-		</dependency>
+		<!--<dependency>-->
+		  <!--<groupId>org.activiti</groupId>-->
+		  <!--<artifactId>activiti-bpmn-model-serial</artifactId>-->
+		  <!--<version>5.18.0</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-json-converter</artifactId>
@@ -488,11 +488,11 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.2.0</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.oracle</groupId>-->
+			<!--<artifactId>ojdbc6</artifactId>-->
+			<!--<version>11.2.0.2.0</version>-->
+		<!--</dependency>-->
 
 
 
@@ -522,11 +522,11 @@
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
 		</dependency>
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itextasian</artifactId>
-			<version>2.1.7</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.lowagie</groupId>-->
+			<!--<artifactId>itextasian</artifactId>-->
+			<!--<version>2.1.7</version>-->
+		<!--</dependency>-->
 		
 		<dependency>
 			<groupId>com.belerweb</groupId>
@@ -613,47 +613,47 @@
 		    <version>4.5.3</version>
 		</dependency>
 		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>jsaas-bpm</artifactId>
-		  <version>5.5.19</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>jsaas-core</artifactId>
-		  <version>5.5.18</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>gexin-rp-fastjson</artifactId>
-		  <version>1.0</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>gexin-rp-sdk-base</artifactId>
-		  <version>4.0</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>gexin-rp-sdk-http</artifactId>
-		  <version>4.0</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>gexin-rp-sdk-template</artifactId>
-		  <version>4.0</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>protobuf-java</artifactId>
-		  <version>2.5</version>
-		</dependency>		
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>jsaas-bpm</artifactId>-->
+		  <!--<version>5.5.19</version>-->
+		<!--</dependency>-->
+		<!---->
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>jsaas-core</artifactId>-->
+		  <!--<version>5.5.18</version>-->
+		<!--</dependency>-->
+		<!---->
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>gexin-rp-fastjson</artifactId>-->
+		  <!--<version>1.0</version>-->
+		<!--</dependency>-->
+		<!---->
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>gexin-rp-sdk-base</artifactId>-->
+		  <!--<version>4.0</version>-->
+		<!--</dependency>-->
+		<!---->
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>gexin-rp-sdk-http</artifactId>-->
+		  <!--<version>4.0</version>-->
+		<!--</dependency>-->
+		<!---->
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>gexin-rp-sdk-template</artifactId>-->
+		  <!--<version>4.0</version>-->
+		<!--</dependency>-->
+		<!---->
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>protobuf-java</artifactId>-->
+		  <!--<version>2.5</version>-->
+		<!--</dependency>		-->
 	
 		<dependency>
 	    	<groupId>redis.clients</groupId>
@@ -673,11 +673,11 @@
 		</dependency>
 		  
 		
-		<dependency>
-		  <groupId>com.redxun</groupId>
-		  <artifactId>bpmclient</artifactId>
-		  <version>1.1</version>
-		</dependency>
+		<!--<dependency>-->
+		  <!--<groupId>com.redxun</groupId>-->
+		  <!--<artifactId>bpmclient</artifactId>-->
+		  <!--<version>1.1</version>-->
+		<!--</dependency>-->
 		
 		<!-- 
 		<dependency>  
@@ -725,7 +725,7 @@
 			</resource>
 		</resources>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<!--<testSourceDirectory>src/test/java</testSourceDirectory>-->
 		<testResources>
 			<testResource>
 				<directory>src/test/resources</directory>
@@ -813,4 +813,7 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+
+
 </project>
