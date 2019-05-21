@@ -184,14 +184,14 @@
     <welcome-file>login.jsp</welcome-file>
     <welcome-file>login.html</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>ReveiveServlet</display-name>
-    <servlet-name>ReveiveServlet</servlet-name>
-    <servlet-class>com.redxun.wx.pub.ReveiveServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ReveiveServlet</servlet-name>
-    <url-pattern>/PubReveive</url-pattern>
-  </servlet-mapping>
+  <!--<servlet>-->
+    <!--<description></description>-->
+    <!--<display-name>ReveiveServlet</display-name>-->
+    <!--<servlet-name>ReveiveServlet</servlet-name>-->
+    <!--<servlet-class>com.redxun.wx.pub.ReveiveServlet</servlet-class>-->
+  <!--</servlet>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>ReveiveServlet</servlet-name>-->
+    <!--<url-pattern>/PubReveive</url-pattern>-->
+  <!--</servlet-mapping>-->
 </web-app>

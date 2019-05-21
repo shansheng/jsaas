@@ -11,7 +11,7 @@
         http://cxf.apache.org/schemas/configuration/http-conf.xsd">         
   <import resource="classpath:META-INF/cxf/cxf.xml" />  
   
-  <bean id="helloWorldImpl" class="com.redxun.ws.demo.impl.HelloWorldImpl"/>
-  <jaxws:endpoint id="FlowService"	implementor="#helloWorldImpl" address="/helloService" />
+  <!--<bean id="helloWorldImpl" class="com.redxun.ws.demo.impl.HelloWorldImpl"/>-->
+  <!--<jaxws:endpoint id="FlowService"	implementor="#helloWorldImpl" address="/helloService" />-->
    
 </beans>
