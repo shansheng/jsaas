@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: com.microsoft.azure:azure-core:0.9.3">
     <CLASSES>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/com/microsoft/azure/azure-core/0.9.3/azure-core-0.9.3.jar!/" />
+      <root url="jar://E:/storage_local/com/microsoft/azure/azure-core/0.9.3/azure-core-0.9.3.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/com/microsoft/azure/azure-core/0.9.3/azure-core-0.9.3-javadoc.jar!/" />
+      <root url="jar://E:/storage_local/com/microsoft/azure/azure-core/0.9.3/azure-core-0.9.3-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/com/microsoft/azure/azure-core/0.9.3/azure-core-0.9.3-sources.jar!/" />
+      <root url="jar://E:/storage_local/com/microsoft/azure/azure-core/0.9.3/azure-core-0.9.3-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

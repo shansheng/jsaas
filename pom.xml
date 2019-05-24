@@ -734,7 +734,7 @@
 			</resource>
 		</resources>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<!--<testSourceDirectory>src/test/java</testSourceDirectory>-->
 		<testResources>
 			<testResource>
 				<directory>src/test/resources</directory>
@@ -822,4 +822,20 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<repositories>
+		<repository>
+			<id>aliyun-nexus</id>
+			<name>aliyun</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>redxun-nexus</id>
+			<name>Nexus Release Repository</name>
+			<url>http://119.29.97.95:8081/nexus/content/groups/rdgroup/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>

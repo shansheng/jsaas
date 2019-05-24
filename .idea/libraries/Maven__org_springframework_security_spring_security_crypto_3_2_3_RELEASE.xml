@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.springframework.security:spring-security-crypto:3.2.3.RELEASE">
     <CLASSES>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/org/springframework/security/spring-security-crypto/3.2.3.RELEASE/spring-security-crypto-3.2.3.RELEASE.jar!/" />
+      <root url="jar://E:/storage_local/org/springframework/security/spring-security-crypto/3.2.3.RELEASE/spring-security-crypto-3.2.3.RELEASE.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/org/springframework/security/spring-security-crypto/3.2.3.RELEASE/spring-security-crypto-3.2.3.RELEASE-javadoc.jar!/" />
+      <root url="jar://E:/storage_local/org/springframework/security/spring-security-crypto/3.2.3.RELEASE/spring-security-crypto-3.2.3.RELEASE-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/org/springframework/security/spring-security-crypto/3.2.3.RELEASE/spring-security-crypto-3.2.3.RELEASE-sources.jar!/" />
+      <root url="jar://E:/storage_local/org/springframework/security/spring-security-crypto/3.2.3.RELEASE/spring-security-crypto-3.2.3.RELEASE-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

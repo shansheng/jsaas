@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.docx4j:docx4j-export-fo:3.3.1">
     <CLASSES>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/org/docx4j/docx4j-export-fo/3.3.1/docx4j-export-fo-3.3.1.jar!/" />
+      <root url="jar://E:/storage_local/org/docx4j/docx4j-export-fo/3.3.1/docx4j-export-fo-3.3.1.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/org/docx4j/docx4j-export-fo/3.3.1/docx4j-export-fo-3.3.1-javadoc.jar!/" />
+      <root url="jar://E:/storage_local/org/docx4j/docx4j-export-fo/3.3.1/docx4j-export-fo-3.3.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://D:/primeton/apache-maven-3.3.3/storage_local/org/docx4j/docx4j-export-fo/3.3.1/docx4j-export-fo-3.3.1-sources.jar!/" />
+      <root url="jar://E:/storage_local/org/docx4j/docx4j-export-fo/3.3.1/docx4j-export-fo-3.3.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
