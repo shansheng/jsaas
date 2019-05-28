@@ -1,4 +1,14 @@
 ﻿﻿@charset "utf-8";
+/* CSS Document */
+/*通用样式*/
+/* body{background:#fff;} */
+*{font-family: '微软雅黑';}
+*::before{font-weight: normal;}
+th{ font-weight: normal;}
+body{padding: 0;margin: 0;}
+ul,li{padding: 0;margin: 0;list-style: none}
+h1,h2,h3,h4,h5,h6{font-weight: normal;margin: 0}
+a{text-decoration: none;}
 
 *{
 	font-family: '微软雅黑';
@@ -111,9 +121,6 @@ html,body{_background-image:url(about:blank);_background-attachment:fixed;}
     opacity: .4;-moz-opacity: .4;filter: alpha(opacity=40);
 }
 
-
-
-
 .mini-mask{
 	position:absolute;
 	left:0;
@@ -153,13 +160,22 @@ body .mini-fixed
 }
 .mini-mask-loading
 {
-    padding:10px 8px 10px 30px;	
-    background:#fff url(images/grid/loading1.gif) no-repeat 20px center;
+	text-align:center;
+/*  padding:80px;	
+    background:#fff url(images/grid/loading2.gif) center center no-repeat ;
     background:#fff url(images/grid/loading.gif) no-repeat 20px center \9;
-    background-size:35% auto;
-	border:2px solid #517fad;
+    background-size:35% auto; */
+/* 	border:2px solid #517fad; */
+/* font-size:0; */
 }
+.mini-mask-loading span{
+	display:inline-block;
+	width:80px;
+	height:80px;
+	background: url(images/grid/loading3.gif)  no-repeat;
+	background-size:100% 100%;
 
+}
 
 .mini-tools
 {
@@ -194,7 +210,7 @@ body .mini-fixed
 }
 .mini-tools-max
 {
-    background:url(images/tools/max.png) no-repeat center center;
+    background:url(images/tools/max1.gif) no-repeat center center;
     _background-position:50% 3px;
 }
 .mini-tools-min
@@ -204,7 +220,7 @@ body .mini-fixed
 }
 .mini-tools-restore
 {
-    background:url(images/tools/restore.png) no-repeat center center;
+    background:url(images/tools/restore1.png) no-repeat center center;
     _background-position:50% 3px;
 }
 .mini-tools-refresh
@@ -791,13 +807,6 @@ body a.mini-button-disabled, body a:hover.mini-button-disabled
     background:#F8F9FA url(images/button/disabled.png) repeat-x 0 0px;      
     cursor:default;
 }
-body .mini-button-disabled *
-{    
-    cursor: default;
-    opacity: .7;
-    -moz-opacity: .7;
-    filter: alpha(opacity=70);        
-}
 
 
 
@@ -865,7 +874,7 @@ body .mini-button-disabled *
 }
 .mini-checkbox label
 {
-    vertical-align:middle;
+    /*vertical-align:middle;*/
 }
 .mini-checkbox-check,
 .mini-checkbox-icon
@@ -2252,8 +2261,8 @@ a:hover.mini-tabs-leftButton,a:hover.mini-tabs-rightButton
 
 .mini-layout-proxy
 {
-    background:#e9edf1;
-    border:solid 1px #A8A8A8;
+    background:#d0eff7;
+    border:solid 1px #a5d6e2;
     cursor:default;
     overflow:hidden; 
     height:24px;
@@ -2342,25 +2351,21 @@ a:hover.mini-tabs-leftButton,a:hover.mini-tabs-rightButton
 
 .mini-layout-spliticon
 {
-    width:12px;
+    width:15px;
     height:35px;
-    background:url(images/splitter/mini-left.png) no-repeat 50% 50%;
+    background:url(images/splitter/mini-left.gif) no-repeat 50% 50%;
     position:absolute;
-    left:-4px;
-    top:17px;
+    left:-5px;
+    top:50%;
     margin-top:-17px;
     cursor:pointer;
-    background-color: #fff;
-    box-shadow: 1px 1px 3px rgba(0,0,0,.125);
-    z-index: 3;
-    border-radius: 0 4px 4px 0;
 }
 .mini-layout-split-east .mini-layout-spliticon
 {
-    background: #fff url(images/splitter/mini-right.png) no-repeat 50% 50%;
+    background:url(images/splitter/mini-right.gif) no-repeat 50% 50%;
     border-radius: 4px 0 0 4px;
-    box-shadow: rgba(0, 0, 0, 0.121569) -1px 1px 3px;
-    left: -3px;
+   
+    
 }
 .mini-layout-split-north .mini-layout-spliticon,
 .mini-layout-split-south .mini-layout-spliticon
@@ -2376,12 +2381,14 @@ a:hover.mini-tabs-leftButton,a:hover.mini-tabs-rightButton
 
 .mini-layout-split-west .mini-layout-spliticon-collapse
 {
-    background:url(images/splitter/mini-right.png) no-repeat 50% 50%;
+    background:url(images/splitter/mini-right.gif) no-repeat 50% 50%;
     background-color: #fff;
+    z-index:999;
+    left:1px;
 }
 .mini-layout-split-east .mini-layout-spliticon-collapse
 {
-    background:url(images/splitter/mini-left.png) no-repeat 50% 50% #fff;
+    background:url(images/splitter/mini-left.gif) no-repeat 50% 50% #fff;
 }
 .mini-layout-split-north .mini-layout-spliticon-collapse
 {
@@ -3580,7 +3587,7 @@ body .mini-grid-deleteRow
 {
     height:30px;
     border-right:#d2d2d2 1px solid;
-    border-bottom:solid 2px #A5ACB5;
+    border-bottom:solid 1px #d7e1ef;
     background:#fff;    
     
 }
@@ -3767,14 +3774,14 @@ body .mini-grid-row-hover
 {
 	position:relative;
     overflow:hidden;
-    border-bottom:solid 1px #C9C9C9;
+    /*border-bottom:solid 1px #C9C9C9;*/
     background:#E7EAEE url(images/grid/footer.png) repeat-x 0 0;
 }
 .mini-grid-pager
 {
 	position:relative;
     overflow:hidden;
-    border-top:solid 1px #C9C9C9;
+    /*border-top:solid 1px #C9C9C9;*/
     background:#E7EAEE url(images/grid/footer.png) repeat-x 0 0;
 }
 
@@ -3959,21 +3966,21 @@ body .mini-grid-row-hover
 }
 .mini-grid-checkbox{     
 
-    background:url(images/icons/checkbox.png) no-repeat 0 0;
+    background:url(images/icons/checkbox.gif) no-repeat 0 0;
 }
 .mini-grid-checkbox-checked,
 .mini-grid-row-selected .mini-checkcolumn .mini-grid-checkbox
 {
-     background:url(images/icons/checkbox.png) no-repeat 0 -13px;
+     background:url(images/icons/checkbox.gif) no-repeat 0 -13px;
 }
 .mini-grid-radio{     
 
-    background:url(images/icons/radio.png) no-repeat 0 0;
+    background:url(images/icons/checkbox.gif) no-repeat 0 0;
 }
 .mini-grid-radio-checked,
 .mini-grid-row-selected .mini-checkcolumn .mini-grid-radio
 {
-     background:url(images/icons/radio.png) no-repeat 0 -13px;
+     background:url(images/icons/checkbox.gif) no-repeat 0 -13px;
 }
 
 .mini-tree .mini-grid-viewport{
@@ -4691,7 +4698,6 @@ body .mini-pager .mini-pager-num
 }
 
 .mini-tips-warning .icon-wxClose:before{
-	font-size: 18px;
     font-weight: bold;
 }
 
@@ -4777,7 +4783,6 @@ body .mini-pager .mini-pager-num
 	text-align: center;
 	margin:0;
 	color: #666;
-	transition: color .3s;
     line-height: 32px;
 }
 
@@ -4794,22 +4799,30 @@ body .mini-pager .mini-pager-num
 	float: left;
 	position: relative;
 }
-
+/*
 .titleBar{
 	width:calc(100% - 12px);
 	margin: 10px auto;
 	padding:6px 0;
 	background: #fff;
 	border-radius: 4px;
+}*/
+
+.searchBox span.text{
+	padding-right:5px;
 }
 
 .titleBar>ul>li,
 .titleBar #searchForm>ul>li{
 	float: left;
-	margin: 0 6px;
+	margin: 0 4px;
 	font-size: 14px;
-	padding: 8px 0;
+	padding: 6px 0;
 }
+
+
+
+
 
 /* .titleBar>ul>li:first-of-type,
 .titleBar #searchForm>ul>li:first-of-type{

@@ -55,8 +55,8 @@ mini.extend(UserControl.UploadPanel, mini.Panel, {
     initComponents: function () {
     	//加载模版到页面。
     	includeFormTemplate();
-    	var html="<a name='upload' class='mini-button' iconCls='icon-upload' >上传</a>" +
-    			"<a name='clean' class='mini-button' iconCls='icon-clear' >清空</a>";
+    	var html="<a name='upload' class='mini-button'>上传</a>" +
+    			"<a name='clean' class='mini-button' >清空</a>";
     	
     	this.clearData();
     	
@@ -91,7 +91,7 @@ mini.extend(UserControl.UploadPanel, mini.Panel, {
 			});
         });
         this.cleanBtn.on('click', function (e) {
-        	that.cleanFile();
+        	self_.cleanFile();
         });   
         
     },
@@ -171,8 +171,9 @@ mini.extend(UserControl.UploadPanel, mini.Panel, {
     		var btn=$(buttons[i]);
     		btn.bind("click",function(e){
     			var el=$(e.currentTarget);
-    			var parentLi=$(e.currentTarget).closest("li");
-    			var fileId=parentLi.attr("id").replace("li_","");
+    			var parentLi=$(e.currentTarget).closest("tr");
+    			var liId = parentLi.attr("id");
+    			var fileId=liId.replace("li_","");
     			var files=self_.getFiles();
     			for(var j=0;j<files.length;j++){
     				if(fileId==files[j].fileId){
@@ -233,7 +234,6 @@ mini.extend(UserControl.UploadPanel, mini.Panel, {
     	var write=!this.readOnly;
     	var data={"list":tmpfiles,isDown:this.isDown,isPrint:this.isPrint,
     			ctxPath:__rootPath,write:write,enableOpenOffice:_enable_openOffice};
-    	
     	var html=baiduTemplate('uploadFile',data);
     	return html;
     },
@@ -324,14 +324,29 @@ mini.extend(UserControl.MiniUser, mini.ButtonEdit, {
     },
     bindEvents: function () {
         this.on('buttonclick', _UserButtonClick);
-        this.on("closeclick",_OnButtonEditClear);
+		this.on('valuechanged', function(e){
+			var btn=e.sender;
+			var value =btn.value;
+			var maxLength = btn.maxLength;
+			if(value && maxLength && value.length>maxLength){
+				btn.setIsValid(false);
+				btn.setText("");
+				btn.setValue("");
+				mini.alert("所选用户值长度【"+value.length+"】大于控件长度【"+maxLength+"】");
+			}
+		});
+        this.on("closeclick",_ClearButtonEdit );
     },
     setSingle: function (value) {
     	this.single=value;
     },
+    setRefconfig: function (value) {
+    	this.refconfig=value;
+    },
     getAttrs: function (el) {
         var attrs = UserControl.MiniUser.superclass.getAttrs.call(this, el);
         mini._ParseBool(el, attrs,["single"]);
+        mini._ParseString(el, attrs,["refconfig","dimid","dimname","dimlevel","orgconfig","groupid"]);
         return attrs;
     }
 });
@@ -339,6 +354,104 @@ mini.extend(UserControl.MiniUser, mini.ButtonEdit, {
 
 
 mini.regClass(UserControl.MiniUser, "userControl");
+
+
+/**
+ * 用户控件选择按钮点击事件
+ * 
+ * @param e
+ */
+function _UserButtonClick(e){
+	var userSel=e.sender;
+	var single=userSel.single;
+	var name=userSel.name;
+	var text_name=name +"_name";
+	var refconfig = userSel.refconfig;
+	var dimid = userSel.dimid;
+	var dimname = userSel.dimname;
+	var dimlevel = userSel.dimlevel;
+	var orgconfig = userSel.orgconfig;
+	var orgid = userSel.groupid;
+	var orgname = userSel.orgname;
+	var initDim = userSel.initDim;
+	var initRankLevel = userSel.initRankLevel;
+	var ids=userSel.getValue();
+	var names=userSel.getText();
+	
+	var aryUser=[];
+	if(ids){
+		var aryIds=ids.split(",");
+		var aryNames=names.split(",");
+		
+		for(var i=0;i<aryIds.length;i++){
+			var userObj={};
+			userObj.userId=aryIds[i];
+			userObj.fullname=aryNames[i];
+			aryUser.push(userObj);
+		}
+	}
+	
+	var gridRow=getGridByEditor(userSel);
+	
+	var flag=single || single=="true"?true:false;
+	var showDimId = true;
+	var conf={single:flag,users:aryUser,callback:function(data){
+		if(flag){
+			if(window.top!=window.self  || !gridRow){
+				userSel.setValue(data.userId);
+				userSel.setText(data.fullname);
+				userSel.doValueChanged();
+			}
+			else{
+				var grid=gridRow.grid;
+				var obj={};
+				obj[name]=data.userId;
+				obj[text_name]=data.fullname;
+				grid.updateRow ( gridRow.row, obj );
+			}
+		}else{
+			var uIds=[];
+			var uNames=[];
+			for(var i=0;i<data.length;i++){
+				uIds.push(data[i].userId);
+				uNames.push(data[i].fullname);
+			}
+			
+			if(window.top!=window.self || !gridRow){
+				userSel.setValue(uIds.join(','));
+				userSel.setText(uNames.join(','));
+				userSel.doValueChanged();
+			}
+			else{
+				var grid=gridRow.grid;
+				var obj={};
+				obj[name]=uIds.join(',');
+				obj[text_name]=uNames.join(',');
+				grid.updateRow ( gridRow.row, obj );
+			}
+		}
+	}};
+	if(refconfig || orgconfig || initDim){
+		conf.refconfig = refconfig;
+		conf.orgconfig = orgconfig;
+		if(conf.refconfig=="level"){
+			var level = mini.getByName(dimlevel);
+			if(level){
+				conf.instlevel = level.getValue();
+			}
+		}
+		conf.instid = dimid;
+		conf.instname = dimname;
+		conf.orgid = orgid;
+		conf.orgname = orgname;
+		conf.initDim = initDim;
+		conf.initRankLevel = initRankLevel;
+		showDimId = false;
+	}
+	conf.showDimId=showDimId;
+	
+	_UserDialog(conf);
+}
 
 /**
  * 用户组选择控件。
@@ -368,7 +481,18 @@ mini.extend(UserControl.MiniGroup, mini.ButtonEdit, {
     dimId:"",
     bindEvents: function () {
         this.on('buttonclick', _GroupButtonClick);
-        this.on("closeclick",_OnButtonEditClear);
+		this.on('valuechanged', function(e){
+			var btn=e.sender;
+			var value =btn.value;
+			var maxLength = btn.maxLength;
+			if(value && maxLength && value.length>maxLength){
+				btn.setIsValid(false);
+				btn.setText("");
+				btn.setValue("");
+				mini.alert("所选用户组值长度【"+value.length+"】大于控件长度【"+maxLength+"】");
+			}
+		});
+        this.on("closeclick",_ClearButtonEdit);
     },
     setSingle: function (value) {
     	this.single=value;
@@ -391,6 +515,71 @@ mini.extend(UserControl.MiniGroup, mini.ButtonEdit, {
 });
 
 mini.regClass(UserControl.MiniGroup, "groupControl");
+
+
+
+
+/**
+ * 用户组选择按钮点击事件
+ * 
+ * @param e
+ */
+function _GroupButtonClick(e){
+	var groupSel=e.sender;
+	var single=groupSel.single;
+
+	var gridRow=getGridByEditor(groupSel);
+	var name=groupSel.name;
+	var text_name=name +"_name";
+	
+	var showDim=groupSel.showDim;
+
+	var dimId=groupSel.dimId;
+	var callback=function(groups){
+		if(single ){
+			if(window.top!=window.self  || !gridRow){
+				groupSel.setValue(groups.groupId);
+				groupSel.setText(groups.name);
+				groupSel.doValueChanged();
+			}
+			else{
+				var grid=gridRow.grid;
+				var obj={};
+				obj[name]=groups.groupId;
+				obj[text_name]=groups.name;
+				grid.updateRow ( gridRow.row, obj );
+			}
+			
+		}else{
+			var uIds=[];
+			var uNames=[];
+			for(var i=0;i<groups.length;i++){
+				uIds.push(groups[i].groupId);
+				uNames.push(groups[i].name);
+			}
+			
+			if(window.top!=window.self  || !gridRow){
+				groupSel.setValue(uIds.join(','));
+				groupSel.setText(uNames.join(','));
+				groupSel.doValueChanged();
+			}
+			else{
+				var grid=gridRow.grid;
+				var obj={};
+				obj[name]=uIds.join(',');
+				obj[text_name]=uNames.join(',');
+				grid.updateRow ( gridRow.row, obj );
+			}
+			
+		}
+	};
+	
+	if(showDim){
+		_GroupDlg(single,callback);
+	}else{
+		_GroupSingleDim(single,dimId,callback);
+	}
+}
 
 /**
  * 部门选择控件。
@@ -417,7 +606,18 @@ mini.extend(UserControl.MiniDepartMent, mini.ButtonEdit, {
     },
     bindEvents: function () {
         this.on('buttonclick', _DepButtonClick);
-        this.on("closeclick",_OnButtonEditClear);
+		this.on('valuechanged', function(e){
+			var btn=e.sender;
+			var value =btn.value;
+			var maxLength = btn.maxLength;
+			if(value && maxLength && value.length>maxLength){
+				btn.setIsValid(false);
+				btn.setText("");
+				btn.setValue("");
+				mini.alert("所选部门值长度【"+value.length+"】大于控件长度【"+maxLength+"】");
+			}
+		});
+        this.on("closeclick",_ClearButtonEdit);
     },
     setSingle: function (value) {
     	this.single=value;
@@ -431,6 +631,79 @@ mini.extend(UserControl.MiniDepartMent, mini.ButtonEdit, {
 });
 
 mini.regClass(UserControl.MiniDepartMent, "depControl");
+
+/**
+ * 部门按钮的点击事件
+ * 
+ * @param e
+ */
+function _DepButtonClick(e){
+	var depSel=e.sender;	
+	var single=depSel.single;	
+	var config=depSel.config || {};
+	
+	var gridRow=getGridByEditor(depSel);
+	var name=depSel.name;
+	var text_name=name +"_name";
+
+	var callback=function(rtn){
+		if(single){
+			if(window.top!=window.self  || !gridRow){
+				depSel.setValue(rtn.groupId);
+				depSel.setText(rtn.name);
+			}
+			else{
+				var grid=gridRow.grid;
+				var obj={};
+				obj[name]=rtn.groupId;
+				obj[text_name]=rtn.name;
+				grid.updateRow ( gridRow.row, obj );
+			}
+		}else{
+			var uIds=[];
+			var uNames=[];
+			for(var i=0;i<rtn.length;i++){
+				uIds.push(rtn[i].groupId);
+				uNames.push(rtn[i].name);
+			}
+			
+			if(window.top!=window.self  || !gridRow){
+				depSel.setValue(uIds.join(','));
+				depSel.setText(uNames.join(','));
+				depSel.doValueChanged();
+			}
+			else{
+				var grid=gridRow.grid;
+				var obj={};
+				obj[name]=uIds.join(',');
+				obj[text_name]=uNames.join(',');
+				grid.updateRow ( gridRow.row, obj );
+			}
+		}
+		
+	};
+	//回调。
+	config.callback=callback;
+	config.single=single;
+	
+	var groups=[];
+	var ids=depSel.getValue();
+	var names=depSel.getText();
+	if(ids){
+		var aryIds=ids.split(",");
+		var aryNames=names.split(",");
+		for(var i=0;i<aryIds.length;i++){
+			var o={};
+			o.groupId=aryIds[i];
+			o.name=aryNames[i];
+			groups.push(o);
+		}
+	}
+	config.groups=groups;
+	
+	
+	_DepDialog(config);
+}
 
 /**
  * 富文本框。
@@ -455,7 +728,6 @@ mini.extend(UserControl.MiniUEditor, mini.Panel, {
     readOnly:false,
     value:"",
     initComponents: function () {
-    	
     	var el=this.getEl();
     	var body=this.getBodyEl();
     	body.id=this.uid +"_body";
@@ -484,6 +756,8 @@ mini.extend(UserControl.MiniUEditor, mini.Panel, {
     	var self=this;
     	
     	
+    	
+    	
 		setTimeout(function(){
 			
 			var bodyEl=self.getBodyEl();
@@ -495,22 +769,33 @@ mini.extend(UserControl.MiniUEditor, mini.Panel, {
 	    	else{
 	    		var bodyEl=self.getBodyEl();
 	    		var	parent=$(bodyEl).closest(".mini-panel");
+	    		
+	    	
         		var width=parent.width();
         		var height=parent.height();
         		var val=bodyEl.innerHTML;
         		
         		$(".mini-ueditor").parent('td').addClass('mini-ueditor-td');
+        		
+        		var	td=$(bodyEl).closest(".mini-ueditor-td");
+        		if(td.attr("width")){
+        			width=td.attr("width");
+    			}
         		$(bodyEl).css("overflow","hidden");
         		bodyEl.innerHTML="";
         		self.editor= UE.getEditor(id);
         		self.editor.addListener("ready", function () {
+        			
+        			if(self.value){
+            			val=self.value;
+            		}
         			
         			//调整编辑器高度
         			var editor=$(".edui-editor",parent);
         			var toolBar=$(".edui-editor-toolbarbox",parent);
         			var iframe=$(".edui-editor-iframeholder",parent);
         			var toolBarHeight= 70;
-        	
+        			
         			editor.width(width-8);
         			editor.height(height - 6);
         			iframe.width(width-8);
@@ -518,7 +803,9 @@ mini.extend(UserControl.MiniUEditor, mini.Panel, {
         			self.editor.setContent(val);
             	});
 	    	}
-    	},10);
+			
+			self.doLayout();
+    	},200);
     },
     
     setReadOnly:function(val){
@@ -526,9 +813,6 @@ mini.extend(UserControl.MiniUEditor, mini.Panel, {
     },
     setValue:function(val){
     	this.value=val;
-    	if(this.editor && this.readOnly !="true"){
-    		this.editor.setContent(val);
-    	}
     },
     getValue:function(){
     	if(!this.readOnly){
@@ -825,7 +1109,7 @@ mini.extend(UserControl.MiniRelatedSolution, mini.Panel, {
     required:false,
     initComponents: function () {
     	//加载模版到页面。
-    	if(ParamsJson.related_Template_loaded) return;
+    	//if(ParamsJson.related_Template_loaded) return;
     	var url=__rootPath +"/scripts/customer/relatedSolutionPanelTemplate.html";
     	var fileContent=$.getFile(url);
     	var jqTemplate=$("#relatedSolutionTemplate");
@@ -834,8 +1118,8 @@ mini.extend(UserControl.MiniRelatedSolution, mini.Panel, {
     		ParamsJson.related_Template_loaded=true;
     	}
     	
-    	var html="<a name='relatedInstance' class='mini-button' iconCls='icon-upload' >选择实例</a>" +
-    			"<a name='clean' class='mini-button' iconCls='icon-clear' >清空</a>";
+    	var html="<a name='relatedInstance' class='mini-button'  >选择实例</a>" +
+    			"<a name='clean' class='mini-button'  >清空</a>";
     	
     	this.clearData();
     	
@@ -988,7 +1272,6 @@ mini.extend(UserControl.MiniRelatedSolution, mini.Panel, {
      * 返回HTML
      */
     getHtmls:function(){
-    	
     	var tmpfiles=this.getInsts();
     	var write=!this.readOnly;
     	
@@ -1167,30 +1450,25 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
     officeId:"",
     username:"",
     version:true,
+    count:0,
     btns:{},
     
     initComponents: function () {
     	
-    	var html='<div  class="mini-toolbar office" style="padding:0px;"> \
-    				<table style="width:100%;">\
-    					<tr>	\
-    						<td style="width:100%;"> \
-            					<a class="mini-button" name="newDocBtn"  plain="true">新建</a>\
-            					<a class="mini-button" name="openBtn"  plain="true">打开</a>\
-    							<a class="mini-button" name="saveBtn"  plain="true">保存</a>\
-    							<a class="mini-button" name="printBtn"  plain="true">打印</a>\
-    							<a class="mini-button" name="printSettingBtn"  plain="true">打印设置</a>\
-    							<a class="mini-button" name="fullScreenBtn"  plain="true">全屏</a>\
-            					<span class="separator"></span>\
-					    		<a class="mini-button" name="saveMarkBtn"  plain="true">留痕</a>\
-								<a class="mini-button" name="noSaveMarkBtn"  plain="true">不留痕</a>\
-								<a class="mini-button" name="clearMarkBtn"  plain="true">清除痕</a>\
-    							<span class="separator"></span>\
-    							<a class="mini-button" name="inertTemplateBtn"  plain="true">模板</a>\
-    							<a class="mini-button" name="outerRedBtn"  plain="true">套红</a>\
-    						</td>\
-    					</tr> \
-    				</table>\
+    	var html='<div  class="form-toolBox office"> \
+					<a class="mini-button" name="newDocBtn"  plain="true">新建</a>\
+					<a class="mini-button" name="openBtn"  plain="true">打开</a>\
+					<a class="mini-button" name="saveBtn"  plain="true">保存</a>\
+					<a class="mini-button" name="printBtn"  plain="true">打印</a>\
+					<a class="mini-button" name="printSettingBtn"  plain="true">打印设置</a>\
+					<a class="mini-button" name="fullScreenBtn"  plain="true">全屏</a>\
+					<em style="font-style: normal;font-size: 14px;margin:0 10px 0 5px;width: 1px;height: 26px;background: #ddd;display: inline-block;vertical-align: middle;"></em>\
+					<a class="mini-button" name="saveMarkBtn"  plain="true">留痕</a>\
+					<a class="mini-button" name="noSaveMarkBtn"  plain="true">不留痕</a>\
+					<a class="mini-button" name="clearMarkBtn"  plain="true">清除痕</a>\
+					<em  style="font-style: normal;font-size: 14px;margin:0 10px 0 5px;width: 1px;height: 26px;background: #ddd;display: inline-block;vertical-align: middle;"></em>\
+					<a class="mini-button" name="inertTemplateBtn"  plain="true">模板</a>\
+					<a class="mini-button" name="outerRedBtn"  plain="true">套红</a>\
     			</div>';
     	
     	this.set({
@@ -1370,6 +1648,12 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
     getName:function(){
     	return this.name;
     },
+    startInitDoc:function(){
+    	this.count++;
+    	if(this.count==2){
+			this.initDoc();
+		}
+    },
     /**
 	 * 设置只读。
 	 */
@@ -1379,7 +1663,7 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
 			OfficeControls.decreaseAmount();
 		}
 		this.readonly=val;
-		this.initDoc();
+		this.startInitDoc();
 	},
 	getReadonly:function(){
 		return this.readonly;
@@ -1394,6 +1678,16 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
     setValue:function(val){
     	this.updValue(val);
     },
+    /**
+	 * 设置是否支持版本
+	 */
+	setVersion:function(val){
+		this.version=val;
+		this.startInitDoc();
+	},
+	getVersion:function(){
+		return this.version;
+	},
     setUsername:function(val){
     	this.username=val;
     	this.officeObj.WebUserName=val;
@@ -1406,6 +1700,12 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
 		this.officeId=json.id;
 		this.doctype=json.type;
     	this.value=val;
+    },
+    /**
+     * 返回控件。
+     */
+    getCtl:function(){
+    	return this.officeObj;
     },
     //新建文档
     newDoc:function(){
@@ -1526,7 +1826,6 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
 			saveRange.Paste();
 		}
 		catch(err){
-			console.info(err);
 		}
 	},
 	loadRedTemplate:function(fileId){
@@ -1569,24 +1868,42 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
 					false //是否锁定印章
 					);
 			
-			console.info(this.username);
-			console.info("signcomplete");
+			
 		}catch(err){
-			console.info(err);
-			console.info("signStamp:" +err.name + ": " + err.message);
+			
 		}
 	},
 	//加载文档。
 	initDoc:function(){
+		
 		var val=this.value;
 		//指定了文件。
 		if(val){
-			var tmp=this.getDocType(this.doctype)
-			var url=__rootPath +"/sys/core/office/office/"+this.officeId+".do";
+			var tmp=this.getDocType(this.doctype);
+			var url="";
+			
+			
+			if(this.version){
+				url=__rootPath +"/sys/core/office/office/"+this.officeId+".do";
+			}
+			else{
+				url=__rootPath +"/sys/core/office/download/"+this.officeId+".do";
+			}
 			try{
 				this.officeObj.OpenFromURL(url,null,tmp);
-				//初始化版本
-				this.initVersion();
+				
+				var browserType=getBrowserType();
+				if(browserType==0){
+					if (window.officeControlLoaded){
+						officeControlLoaded();
+					}
+				}
+				
+				
+				if(this.version){
+					//初始化版本
+					this.initVersion();
+				}
 			}
 			catch(err){
 				this.newDoc();
@@ -1606,7 +1923,14 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
 			params+="&officeId="+ this.officeId;
 		}
 		var browserType=getBrowserType();
-		var url=__rootPath +"/sys/core/office/saveOffice.do";
+		
+		var url="";
+		if(this.version){
+			url=__rootPath +"/sys/core/office/saveOffice.do";
+		}
+		else{
+			url=__rootPath +"/sys/core/office/saveFile.do";
+		}
 		//IE的情况
 		if(browserType==0){
 			
@@ -1643,15 +1967,7 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
 		}
 		return docType;
 	},
-	/**
-	 * 设置是否支持版本
-	 */
-	setVersion:function(val){
-		this.version=val;
-	},
-	getVersion:function(){
-		return this.version;
-	},
+	
 	/**
 	 * 设置权限
 	 */
@@ -1662,7 +1978,6 @@ mini.extend(UserControl.OfficeControl, mini.Panel, {
 			return;
 		}
 		for(var key in this.btns){
-			console.info(key);
 			var btn=this.btns[key];
 			var visiable=val.indexOf(key)!=-1;
 			btn.setVisible(visiable);
@@ -1736,6 +2051,10 @@ function documentOpened(name){
 	var control=OfficeControls.getControl(name);
 	control.setRead();
 	control.initVersion();
+	
+	if(window.documentOpenedOnCompleteCallback){
+		documentOpenedOnCompleteCallback(name);
+	}
 }
 
 function OnAddTemplateFromUrl(str,doc){
@@ -1784,4 +2103,36 @@ function signStamp(fileId){
 	ctl.signStamp(fileId)
 }
 
+
+/**
+ * 打开word。
+ */
+UserControl.MiniButtonWordPreview = function () {
+
+    UserControl.MiniButtonWordPreview.superclass.constructor.call(this);
+    
+    this.initComponents();
+    this.bindEvents();
+}
+
+mini.extend(UserControl.MiniButtonWordPreview, mini.Button, {
+    uiCls: 'mini-viewword',
+    alias: "",
+    initComponents: function () {
+    },
+    bindEvents: function () {
+        this.on('click', _BtnPreviewWord);
+    },
+    setAlias: function (value) {
+    	this.alias=value;
+    },
+    
+    getAttrs: function (el) {
+        var attrs = UserControl.MiniButtonWordPreview.superclass.getAttrs.call(this, el);
+        mini._ParseString(el, attrs, ["alias"]);
+        return attrs;
+    }
+});
+
+mini.regClass(UserControl.MiniButtonWordPreview, "wordControl");
 

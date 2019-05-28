@@ -1,4 +1,4 @@
- /**
+/**
  * 关闭窗口
  * @returns {unresolved}
  */
@@ -7,8 +7,13 @@ function CloseWindow(action,preFun,afterFun) {
 	if(preFun){
 		preFun.call(this);
 	}
-    if (window.CloseOwnerWindow) return window.CloseOwnerWindow(action);
-    else window.close();
+    if (window.CloseOwnerWindow){
+    	return window.CloseOwnerWindow(action);
+    } 
+    else{
+    	window.close();
+    } 
+    	
     if(afterFun){
 		afterFun.call(this);
 	}
@@ -18,12 +23,7 @@ function CloseWindow(action,preFun,afterFun) {
     }
 }
 
-//对buttonedit开启清空事件，需要在buttonedit控件中增加showClose="true" 属性，并且oncloseclick="_OnButtonEditClear"
-function _OnButtonEditClear(e){
-	var s=e.sender;
-	s.setValue('');
-	s.setText('');
-}
+
 /**
  * 上移表格的行
  */
@@ -65,7 +65,7 @@ function addRowGrid(gridId,row){
 function delRowGrid(gridId){
 	var grid=mini.get(gridId);
 	var selecteds=grid.getSelecteds();
-	grid.removeRows(selecteds);
+	grid.removeRows(selecteds,true);
 }
 
 /**
@@ -92,7 +92,6 @@ function delAll(gridId){
  *         ondestory:关闭的事件
  */
 function _OpenWindow(config){
-	
 	if(!config.iconCls){
 		config.iconCls='icon-window';
 	}
@@ -152,6 +151,16 @@ function _OpenWindow(config){
 
 /**
  * 通用对话框，与_OpenWindow一样，唯一特别是需要传入
+ * conf:{
+ * 	dialogKey:"",
+ * 	onload:function(){
+ * 		var win = this.getIFrameEl().contentWindow;
+ * 		
+ * 	},
+ * 	ondestroy:function(){
+ * 		var win = this.getIFrameEl().contentWindow;
+ * 	}
+ * }
  * @param config
  */
 function _CommonDialog(conf){
@@ -245,6 +254,7 @@ function _CommonDialogExt(conf){
 	});
 }
 
+
 /**
  * 自定义对话框控件中的buttonedit控件调用
  * @param e
@@ -255,7 +265,6 @@ function _OnMiniDialogShow(e){
 	var dialogname=button.dialogname;
 	var valueField=button.valueField;
 	var textField=button.textField;
-
 	_CommonDialog({
 		title:dialogname,
 		height:450,
@@ -264,10 +273,11 @@ function _OnMiniDialogShow(e){
 		ondestroy:function(action){
 			var win=this.getIFrameEl().contentWindow;
 			var data=win.getData();
-			if(data!=null && data.length>0){
-				data=data[0];
-				button.setText(data[textField]);
-				button.setValue(data[valueField]);
+			var rows=data.rows;
+			if(rows!=null && rows.length>0){
+				rows=rows[0];
+				button.setText(rows[textField]);
+				button.setValue(rows[valueField]);
 			}
 		}
 	});
@@ -339,6 +349,7 @@ function _SubmitJson(config){
 	        			result=mini.decode(result);
 	        		}
 	        	}
+	        	
 	        	if(!result) return;
 	        	
 	        	if(result.success){
@@ -359,10 +370,11 @@ function _SubmitJson(config){
 	        		}else if(showMsg){//
 		        		try{
 		        			top._ShowErr({
-		            		content:result.message
+		            		content:result.message,
+		            		data:result.data
 		            	});	
 		        		}catch(e){
-		        			 alert(result.message);
+							mini.alert(result.message);
 		        		}
 	        		}
 	        	}
@@ -373,7 +385,7 @@ function _SubmitJson(config){
 	        	}
 	        	
 	        	if(jqXHR.responseText!='' && jqXHR.responseText!=null){
-		        	top['index']._ShowErr({
+		        	top._ShowErr({
 		        		content:jqXHR.responseText
 		        	});
 	        	}
@@ -455,15 +467,24 @@ function _SaveJson(formId,url,callBack,beforeHandler) {
  * @param beforeHandler
  */
 function _SaveDataJson(formId,callBack,beforeHandler) {
+	var form=$("#" + formId);
+	var url=form.attr("action");
+	
+	var frm = new mini.Form(formId);
+	frm.validate();
+    if (!frm.isValid()) {
+        return;
+    }
+    var formData=frm.getData();
 	
     if(beforeHandler){
-    	var rtn=beforeHandler(data);
+    	var rtn=beforeHandler(formData);
     	if(!rtn) return;
     }
     var config={
     	url: url,
     	method:'POST',
-    	data:data,
+    	data:formData,
     	success:function(result){
     		callBack(result);
     	}
@@ -495,11 +516,14 @@ function _ShowTips(config){
 	mini.showTips({
 		width:width,
 		height:height,
-        content: '<h1>提示</h1><h2>'+config.msg+'</h2><i class="icon-tips-Close"></i>',
+        content:"<em class='MyCenter'>" +
+        		"<div class='hint'><h1>提示</h1><i class='icon-tips-Close'></i></div>" +
+        		"<div  class='MyHint'>"+config.msg+"</div>"+
+        		"</em>",
         state: "success",
         x: x,
         y: y,
-        timeout: 4000
+        timeout: 3000
     });
 }
 
@@ -513,17 +537,25 @@ function _ShowErr(config){
 
 	x=config.x?config.x:'center';
 	y=config.y?config.y:'top';
-	width=config.width || 1024;
+	width=config.width;
 	height=config.height || 'auto';
-
+	var data=config.data || "";
 	mini.showTips({
 		 width:width,
 		 height:height,
-         content: "<span class='icon' onclick='drag(this)'><i class='icon-wxClose' onclick='_close(this)'></i></span><div style='width:"+width+"px;height:"+height+"px;'>"+config.content+"</div>",
+         content:"<em class='MyCenter colorRed'>" +
+         			"<div class='hint'><h1>提示</h1><i class='icon-tips-Close'></i></div>"+
+         			"<div  class='MyContent'>" +
+         				"<div><span class='MyYuan'>!</span></div>" +
+         				"<h4><span>错误信息:</span>"+config.content+"</h4>" +
+         				"<textarea class='ConentS'>"+data+"</textarea>" +
+         				"<div class='MyLook' onclick='lookDet(this)'>查看详情</div>" +
+         			"</div>" +
+         		 "</em>",
          state: "warning",
          x: x,
          y: y,
-         timeout: 60000
+         timeout: 600000000
      });
 }
 
@@ -531,388 +563,12 @@ function _close(This){
 	$(This).parent().parent().slideUp(300);
 }
 
-
-/**
- * config的参数有：
- * types:Document,Icon,Image,Zip,Vedio
- * from:APP,
- * callback:function(files){
- * 	fileId,path
- * }
- * 
- */
-function _FileUploadDlg(config) {
-    var url = __rootPath+"/sys/core/sysFile/dialog.do";
-    
-    _OpenWindow({
-        url: url,
-        title: "上传文件", width: 600, height: 420,
-        onload: function() {
-        },
-        ondestroy: function(action) {
-            if (action == 'ok') {
-                var iframe = this.getIFrameEl();
-                var files = iframe.contentWindow.getFiles();
-                if (config.callback) {
-                    config.callback.call(this, files);
-                }
-            }
-        }
-    });
+function lookDet(obj){
+	var o=$(obj);
+	var p=o.closest(".MyContent");
+	$(".ConentS ",p).toggle();  
 }
 
-//用户对话框
-function _UserDialog(conf){
-	var config={
-		single:false
-	};
-	jQuery.extend(config,conf);
-	
-	_OpenWindow({
-		url:__rootPath+'/sys/org/osUser/dialog.do?single='+config.single +'&dimId='+config.dimId,
-		height:450,
-		width:1080,
-		iconCls:'icon-user-dialog',
-		title:'用户选择',
-		ondestroy:function(action){
-			if(action!='ok')return;
-			var iframe = this.getIFrameEl();
-            var users = iframe.contentWindow.getUsers();
-            if(config.callback){
-            	if(config.single && users.length>0){
-            		config.callback.call(this,users[0]);
-            	}else{
-            		config.callback.call(this,users);
-            	}
-            }
-		}
-	});
-}
-/**
- * 用户选择框
- * @param single
- * @param callback 回调函数，返回选择的用户信息，当为单选时，
- * 返回单值，当为多选时，返回多个值
- */
-function _UserDlg(single,callback){
-	_TenantUserDlg('',single,callback);
-}
-
-/**
- * 参数格式如下:
- * {
- * 	single:是否单选
- * 	users:[{fullname:"",userId:""}]
- * 	callback:function(data){
- * 		
- * 	}
- * }
- * @param conf
- */
-function _UserDialog(conf){
-	var single=conf.single || false;
-	var users=conf.users || [];
-	
-	_OpenWindow({
-		url:__rootPath+'/sys/org/osUser/dialog.do?single='+single,
-		height:450,
-		width:1080,
-		iconCls:'icon-user-dialog',
-		title:'用户选择',
-		onload:function(){
-        	var iframe = this.getIFrameEl().contentWindow;
-        	iframe.init(users);
-        },
-		ondestroy:function(action){
-			if(action!='ok')return;
-			var iframe = this.getIFrameEl();
-            var users = iframe.contentWindow.getUsers();
-            var callback=conf.callback;
-            if(callback){
-            	if(single && users.length>0){
-            		callback.call(this,users[0]);
-            	}else{
-            		callback.call(this,users);
-            	}
-            }
-		}
-	});
-}
-
-/**
- * 按租用机构进行用户选择
- * @param tenantId 当前用户为指定的管理机构下的用户,才可以查询到指定的租用机构下的用户
- * @param single
- * @param callback 回调函数，返回选择的用户信息，当为单选时，
- * 返回单值，当为多选时，返回多个值
- */
-function _TenantUserDlg(tenantId,single,callback){
-	_OpenWindow({
-		url:__rootPath+'/sys/org/osUser/dialog.do?single='+single+'&tenantId='+tenantId,
-		height:450,
-		width:1080,
-		iconCls:'icon-user-dialog',
-		title:'用户选择',
-		ondestroy:function(action){
-			if(action!='ok')return;
-			var iframe = this.getIFrameEl();
-            var users = iframe.contentWindow.getUsers();
-            if(callback){
-            	if(single && users.length>0){
-            		callback.call(this,users[0]);
-            	}else{
-            		callback.call(this,users);
-            	}
-            }
-		}
-	});
-}
-
-/**
- * 部门选择器
- * @param single
- * @param config
- * @param callback
- */
-function _DepDlg(single,config,callback){	
-	_TenantGroupDlg('',single,config,'1',callback,false);
-}
-
-/**
- * 用户组选择框（查询当前租户下的用户）
- * @param single 是否单选择
- * @param callback 回调
- * @param reDim  回调是否需要返回维度ID,可不选择
- */
-function _GroupDlg(single,callback,reDim){
-	if(!reDim){
-		reDim=false;
-	}
-	_TenantGroupDlg('',single,'','',callback,reDim);
-}
-
-/**
- * 显示某一维度下的用户组选择框（查询当前租户下的用户）
- * @param single
- * @param dimId 显示维度下的用户组
- * @param callback
- */
-function _GroupSingleDim(single,dimId,callback){
-	_TenantGroupDlg('',single,'',dimId,callback,false);
-}
-
-/**
- * 去除行政维度下的用户组
- * @param conf
- */
-function _GroupCanDlg(conf){
-	var config={};
-	$.extend(config,conf);
-	//去除行政维度下的用户
-	conf.excludeAdmin=true;
-	conf.showDimId=false;
-	_SaasGroupDlg(conf);
-}
-
-/**
- * SAAS级的用户组选择框
- * @param conf
- * tenantId 当前用户为指定的管理机构下的用户,才可以查询到指定的租用机构下的用户
- * single  是否单选
- * showDimId 维度Id，传入后，则只显示该维度的用户组
- * callback  callback
- * excludeAdmin 排除行政维度
- * reDim  必须返回维度选择
- */
-function _SaasGroupDlg(conf){
-	var title=conf.title;
-	if(!title && conf.showDimId=='1'){
-		title='部门选择';
-	}
-	if(!conf.excludeAdmin){
-		conf.excludeAdmin='';
-	}
-	
-	if(!conf.width){
-		conf.width=840;
-	}
-	if(!conf.height){
-		conf.height=450;
-	}
-	_OpenWindow({
-		iconCls:'icon-group-dialog',
-		url:__rootPath+'/sys/org/osGroup/dialog.do?single='+conf.single+'&reDim='+conf.reDim+'&showDimId='+conf.showDimId+'&tenantId='+conf.tenantId +'&excludeAdmin='+conf.excludeAdmin,
-		height:conf.height,
-		width:conf.width,
-		title:title,
-		ondestroy:function(action){
-			if(action!='ok')return;
-			var iframe = this.getIFrameEl();
-            var groups = iframe.contentWindow.getGroups();
-            var dim={};
-            //需要返回dim
-            if(conf.reDim){
-            	var dimNode=iframe.contentWindow.getSelectedDim();
-	            dim={
-            		dimId:dimNode.dimId,
-            		dimKey:dimNode.dimKey,
-            		name:dimNode.name
-	            };
-            }
-            if(conf.callback){
-            	if(conf.single && groups.length==1){
-            		conf.callback.call(this,groups[0],dim);
-            	}else{
-            		conf.callback.call(this,groups,dim);
-            	}
-            }
-		}
-	});
-}
-
-/**
- * 用户组选择框（查询指定的租户下的用户）
- * @param tenantId 当前用户为指定的管理机构下的用户,才可以查询到指定的租用机构下的用户
- * @param single 是否单选
- * @param config 选择框配置
- * @param showDimId 维度Id，传入后，则只显示该维度的用户组
- * @param callback 
- * @param reDim 必须返回维度选择
- */
-function _TenantGroupDlg(tenantId,single,config,showDimId,callback,reDim){
-	
-	var title='用户组选择';
-	if(showDimId=='1'){
-		title='部门选择';
-		
-		
-	}
-	if(!config){
-		config = "";
-	}
-	
-	
-	_OpenWindow({
-		iconCls:'icon-group-dialog',
-		url:__rootPath+'/sys/org/osGroup/dialog.do?single='+single+'&reDim='+reDim+'&showDimId='+showDimId+'&tenantId='+tenantId+'&config=' + config,
-		height:480,
-		width:930,
-		title:title,
-		ondestroy:function(action){
-			if(action!='ok')return;
-			var iframe = this.getIFrameEl();
-            var groups = iframe.contentWindow.getGroups();
-            var dim={};
-            //需要返回dim
-            if(reDim){
-            	var dimNode=iframe.contentWindow.getSelectedDim();
-	            dim={
-	            		dimId:dimNode.dimId,
-	            		dimKey:dimNode.dimKey,
-	            		name:dimNode.name
-	            };
-            }
-            if(callback){
-            	if(single && groups.length==1){
-            		callback.call(this,groups[0],dim);
-            	}else{
-            		callback.call(this,groups,dim);
-            	}
-            }
-		}
-	});
-}
-
-/**
- * 显示图片对框架
- * 
- * @param config
- * {
- * 	  from:来自个人的上传图片（值为：SELF），来自应用程序(值为：APPLICATION)
- *    single:单选择(true),复选(false)
- *    callback:回调函数，当选择ok，则可以通过回调函数的参数获得选择的图片
- * }
- */
-function _ImageDlg(config){
-	
-	if(!config.width) config.width=620;
-	
-	if(!config.height) config.height=450;
-	
-	mini.open({
-        allowResize: true, //允许尺寸调节
-        allowDrag: true, //允许拖拽位置
-        showCloseButton: true, //显示关闭按钮
-        showMaxButton: true, //显示最大化按钮
-        showModal: true,
-        //from=SELF代表来自个人的图片，single代表只允许上传一张
-        url: __rootPath+"/sys/core/sysFile/appImages.do?from="+config.from+"&single="+config.single,
-        title: "选择图片", 
-        width: config.width, 
-        height: config.height,
-        onload: function() {
-			
-        },
-        ondestroy: function(action) {
-            if (action != 'ok') return;
-            var iframe = this.getIFrameEl();
-            var imgs = iframe.contentWindow.getImages();
-            if(config && config.callback){
-                config.callback.call(this,imgs);
-            }
-        }
-    });	
-}
-
-/**
- * 预览原图
- * @param fileId
- */
-function _ImageViewDlg(fileId){
-	var win=mini.open({
-        allowResize: true, //允许尺寸调节
-        allowDrag: true, //允许拖拽位置
-        showCloseButton: true, //显示关闭按钮
-        showMaxButton: true, //显示最大化按钮
-        showModal: true,
-        //只允许上传图片，具体的图片格式配置在config/fileTypeConfig.xml
-        url: __rootPath+"/sys/core/sysFile/imgPreview.do?fileId="+fileId,
-        title: "图片预览", width: 600, height: 420,
-        onload: function() {
-        },
-        ondestroy: function(action) {
-        }
-    });
-	win.max();
-}
-
-/**
- * 显示个人的对话框
- * @param single 是否为单选图片
- * @param callback 回调函数
- */
-function _UserImageDlg(single,callback){
-	var config={
-		single:single,
-		callback:callback,
-		from:'SELF'
-	};
-	_ImageDlg(config);
-}
-
-/**
- * 显示应用级别的图片对话框
- * @param single
- * @param callback
- */
-function _AppImageDlg(single,callback){
-	var config={
-		single:single,
-		callback:callback,
-		from:'APPLICATION'
-	};
-	_ImageDlg(config);
-}
 /**
  * 获得业务表单的JSON值
  * @param String
@@ -938,11 +594,72 @@ function _GetFormJson(formId){
  * @returns
  */
 function _GetFormJsonMini(formId){
-	var form = new mini.Form("#"+ formId);            
-	var modelJson = form.getData();
-	//FORM_OPINION_
+	var form = new mini.Form("#"+ formId);
+	var formContainer=$("#" + formId);
+	var aryForm=$("[relationtype]",formContainer);
+	var modelJson = {};
+	//原来的数据结构
+	if(aryForm.length==0){
+		var frm=$("#"+formId);
+		modelJson=form.getData();
+		_GetExtJsonsMini(frm,modelJson);
+	}
+	//新的数据结构。
+	else{
+		aryForm.each(function(){
+			var frm=$(this);
+			var id=frm.attr("id");
+			var relationtype=frm.attr("relationtype");
+			if(relationtype=="main"){
+				var mainForm=new mini.Form("#"+ id);
+				var mainData = mainForm.getData();
+				$(".mini-contextonly").each(function(){
+					var obj = $(this);
+					mainData[obj.attr("name")]=obj.text();
+				});
+				$.extend(modelJson, mainData);
+				_GetExtJsonsComplex(frm,modelJson);
+			}
+		});
+		aryForm.each(function(){
+			var frm=$(this);
+			var id=frm.attr("id");
+			var tablename=frm.attr("tablename");
+			var relationtype=frm.attr("relationtype");
+			if(relationtype=="main") return true;
+
+			var subForm=new mini.Form("#"+ id);
+			var subJqForm=$("#"+ id);
+			var subData=subForm.getData();
+			_GetExtJsonsComplex(subJqForm,subData);
+			modelJson["SUB_" +tablename]=subData;
+			
+		});
+	}
+	/**
+	 * 获取字表的数据。
+	 */
+	$('.mini-datagrid,.mini-treegrid',formContainer).each(function(){
+		var name=this.id;
+		var grid=mini.get(name);
+		name=name.replace("grid_","");
+		modelJson["SUB_" +name]=grid.getData();
+	});
+	
+	//处理意见。
+	handOpinion(modelJson);
+	
+	if(modelJson.ID_=="null") modelJson.ID_="";
+	return modelJson;
+}
+
+/**
+ * 处理表单意见数据。
+ * @param modelJson
+ * @returns
+ */
+function handOpinion(modelJson){
 	var pre="FORM_OPINION_";
-	var opinion={};
 	var i=0;
 	for(var key in modelJson){
 		if(!key.startWith(pre)) continue;
@@ -953,19 +670,50 @@ function _GetFormJsonMini(formId){
 		delete modelJson[key];
 		i++;
 	}
-	
-	
-	var form=$("#"+formId);
-
-	var extJson=_GetExtJsonsMini(form);
-	
-	$.extend(modelJson,extJson);
-	
-	return modelJson;
 }
 
-function _GetExtJsonsMini(form){
-	var modelJson={};
+
+function _GetExtJsonsComplex(form,modelJson){
+	 var ctls= mini.getChildControls(form[0]);
+	 for(var i=0;i<ctls.length;i++){
+		 var obj=ctls[i];
+		 var type=obj.type;
+		 if(type!="checkboxlist" && type!="radiobuttonlist" && type!="textboxlist") continue;
+		 
+		 var refField=obj.refField;
+		 var value="";
+		 var cname="";
+		 var tmp=$(obj.el);
+		 if(obj.type=="checkboxlist"){
+			 	cname=tmp.find('tbody>tr>td').children('input[type="hidden"]').attr('name');
+				var ctext=[];
+				var list=tmp.find('tbody>tr>td>div').find('.mini-checkboxlist-item-selected');
+				list.each(function(){
+					ctext.add($(this).find("label").text());
+				});
+				value=ctext.join(",");
+		 }
+		 else if(obj.type=="radiobuttonlist"){
+		 	cname=tmp.find('tbody>tr>td').children('input[type="hidden"]').attr('name');
+		 	value=tmp.find('tbody>tr>td').find('.mini-radiobuttonlist-item-selected').find("label").text();
+		 }
+		 else if(obj.type=="textboxlist"){
+			cname=tmp.find('tbody>tr>td').children('input[type="hidden"]').attr('name');
+			var ctext=[];
+			var list=tmp.find('tbody>tr>td>ul').children('.mini-textboxlist-item');
+			list.each(function(){
+				ctext.add($(this).text());
+			});
+			value=ctext.join(",");
+		 }
+		 if(refField){
+			modelJson[refField]=value;
+		 }
+		 else{
+			modelJson[cname+'_name']=value;
+		 }
+	 }
+	
 	
 	form.find('.mini-radiobuttonlist').each(function(){
 		var cname=$(this).find('tbody>tr>td').children('input[type="hidden"]').attr('name');
@@ -983,16 +731,23 @@ function _GetExtJsonsMini(form){
 		modelJson[cname+'_name']=ctext.join(',');
 	});
 	
-	form.find('.mini-combobox').each(function(){
-		var cname=$(this).children('input[type="hidden"]').attr('name');
-		if(cname!=''){
-			var cbbObj=mini.getByName(cname);
-			if(cbbObj && cbbObj.getText){
-				var ctext=cbbObj.getText();
-				modelJson[cname+'_name']=ctext;
-			}
-		}
+	form.find('.mini-textboxlist').each(function(){
+		var cname=$(this).find('tbody>tr>td').children('input[type="hidden"]').attr('name');
+		var ctext=[];
+		var list=$(this).find('tbody>tr>td>ul').children('.mini-textboxlist-item');
+		list.each(function(){
+			ctext.add($(this).text());
+		});
+		modelJson[cname+'_name']=ctext.join(',');
 	});
+	
+	
+	return modelJson;
+}
+
+function _GetExtJsonsMini(form,modelJson){
+	
+	_GetExtJsonsComplex(form,modelJson);
 	
 	$('.mini-datagrid,.mini-treegrid',form).each(function(){
 		var name=this.id;
@@ -1010,39 +765,7 @@ function _GetExtJsons(formId){
 	var form=$("#"+formId);
 	var modelJson={};
 	
-	var modelJson=_GetExtJsonsMini(form);
-	
-	form.find('.mini-textboxlist').each(function(){
-		var cname=$(this).find('tbody>tr>td').children('input[type="hidden"]').attr('name');
-		var ctext=[];
-		var list=$(this).find('tbody>tr>td>ul').children('.mini-textboxlist-item');
-		list.each(function(){
-			ctext.add($(this).text());
-		});
-		modelJson[cname+'_name']=ctext.join(',');
-	});
-	
-	form.find('.mini-treeselect').each(function(){
-		var cname=$(this).children('input[type="hidden"]').attr('name');
-		if(cname!=''){
-			var tsObj=mini.getByName(cname);
-			if(tsObj && tsObj.getText){
-				var ctext=tsObj.getText();
-				modelJson[cname+'_name']=ctext;
-			}
-		}
-	});
-	
-	form.find('.mini-buttonedit').each(function(){
-		var cname=$(this).children('input[type="hidden"]').attr('name');
-		if(cname!=''){
-			var tsObj=mini.getByName(cname);
-			if(tsObj && tsObj.getText){
-				var ctext=tsObj.getText();
-				modelJson[cname+'_name']=ctext;
-			}
-		}
-	});
+	modelJson=_GetExtJsonsMini(form,modelJson);
 	
 	return modelJson;
 }
@@ -1082,10 +805,7 @@ function _LoadUserInfo(editable){
                 	if(editable){
                 		$("a.mini-user[userId='"+jsons[i].userId+"']").attr('href','javascript:void(0)').attr('onclick','_ShowUserEditor(\''+jsons[i].userId+'\')').html(jsons[i].fullname);
                 	}else{
-                		var sex=jsons[i].sex;
-                		var html='';
-
-                		$("a.mini-user[userId='"+jsons[i].userId+"']").html(html+jsons[i].fullname);
+                		$("a.mini-user[userId='"+jsons[i].userId+"']").html(jsons[i].fullname);
                 	}
                 	
                 }
@@ -1148,140 +868,6 @@ function _handleTask(taskId){
 	});
 }
 
-function _ShowUserEditor(userId){
-	_OpenWindow({
-		title:'编辑用户信息',
-		url:__rootPath+'/sys/org/osUser/edit.do?pkId='+userId,
-		height:450,
-		width:780,
-		onload:function(){
-			
-		}
-	});
-}
-
-/**
- * 显示我的文件上传对话框
- * @param config
- * 		  showMgr:true 是否显示管理界面
- *        from：SELF,APPLICATION
- *        types： Image,Document,Zip,Vedio
- *        single： true,false单选或多选
- *        callback： 回调函数
- */
-function _UploadFileDlg(config){
-	if(config.showMgr){
-		_OpenWindow({
-			title:'我的附件管理器',
-			height:500,
-			width:820,
-			url:__rootPath+'/sys/core/sysFile/myMgr.do?dialog=true&single='+config.single,
-			ondestroy:function(action){
-				if (action != 'ok') return;
-	            var iframe = this.getIFrameEl();
-	            var files = iframe.contentWindow.getFiles();
-	            if(config.callback){
-	                config.callback.call(this,files);
-	            }
-			}
-		});
-	}else{
-		_UploadDialogShowFile({
-			onlyOne:config.onlyOne,
-			from:config.from,
-			types:config.types,
-			callback:config.callback,
-			single:config.single,
-			title:config.title
-		});
-	}
-}
-
-/**
- * 流程解决方案对话框
- * @param single
- * @param callback
- */
-function _BpmSolutionDialog(single,callback){
-	_OpenWindow({
-		url:__rootPath+'/bpm/core/bpmSolution/dialog.do?single='+single,
-		title:'流程解决方案选择',
-		height:600,
-		width:800,
-		iconCls:'icon-flow',
-		ondestroy:function(action){
-			if(action!='ok')return;
-			var iframe = this.getIFrameEl();
-            var sols = iframe.contentWindow.getSolutions();
-            if(callback){
-            	callback.call(this,sols);
-            }
-		}
-	});
-}
-
-/**
- * 上传对话框
- * @param config
- *       from:SELF,APPLICATION
- *       types:Image,Document,Zip,Vedio
- *       callback
- */
-function _UploadDialog(config){
- 	_OpenWindow({
-        //只允许上传图片，具体的图片格式配置在config/fileTypeConfig.xml
-        url: __rootPath+"/sys/core/sysFile/webUploader.do?from="+config.from+"&types="+config.types,
-        title: "文件上传", 
-        width: 400,
-        height: 420,
-        onload: function() {
-			
-        },
-        ondestroy: function(action) {
-            if (action != 'ok') return;
-            var iframe = this.getIFrameEl();
-            var files = iframe.contentWindow.getFiles();
-            
-            if(config.callback){
-                config.callback.call(this,files);
-            }
-        }
-    });
-}
-
-/**
- * 上传对话框
- * @param config
- *       from:SELF,APPLICATION
- *       types:Image,Document,Zip,Vedio
- *       callback
- */
-function _UploadDialogShowFile(config){
-	if(!config.title) config.title="附件上传";
-	var congfigStr = mini.encode(config);
-	var url=__rootPath+"/sys/core/sysFile/webUploader.do?config="+congfigStr;
-	
-	url=encodeURI(url);
-	
- 	_OpenWindow({
-        //只允许上传图片，具体的图片格式配置在config/fileTypeConfig.xml
-        url:url,
-        title: config.title, 
-        width: 600,
-        height: 420,
-        onload: function() {
-			
-        },
-        ondestroy: function(action) {
-            if (action != 'ok') return;
-            var iframe = this.getIFrameEl();
-            var files = iframe.contentWindow.getFiles();
-            if(config.callback){
-                config.callback.call(this,files);
-            }
-        }
-    });
-}
 
 /**
  * 加载用户组信息，使用的时候，是需要在页面中带有以下标签，
@@ -1323,46 +909,7 @@ function _GetIds(rows){
 	}
 	return ids.join(',');
 }
-/*
-_ModuleFlowWin({
-		title:'供应商入库申请',
-		modleKey:'CRM_PROVIDER',
-		failCall:add,
-		success:function(action){
-			
-		}
-	});
-*/
-/**
- * 用于用户自已经的模块中使用，点击弹出添加流程审批业务功能
- */
-function _ModuleFlowWin(conf){
-	var width=conf.width?conf.width:780;
-	var height=conf.height?conf.height:480;
-	$.ajax({
-        url:__rootPath+ '/bpm/integrate/bpmModuleBind/getSolByModuleKey.do?moduleKey='+conf.moduleKey,
-        success: function (json) {
-            if(!json.success){
-            	if(conf.failCall){
-            		conf.failCall.call(this);
-            	}else{
-            		alert('流程业务模块没有绑定的流程解决方案：'+conf.moduleKey);
-            	}
-            }
-            _OpenWindow({
-            	url:__rootPath+'/bpm/core/bpmInst/start.do?solId='+json.data.solId,
-            	title:conf.title,
-            	width:width,
-            	height:height,
-            	ondestroy:function(action){
-            		if(action=='ok' && conf.success){
-            			conf.success.call(this);
-            		}
-            	}
-            });
-        }
-    });
-}
+
 
 String.prototype.trim=function(){
     return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -1465,7 +1012,7 @@ Date.prototype.Max = function(){
  * unit:时间单位 可能的值为 day,hour,minute
  * amount:数量。
  */
-Date.prototype.sub = function(unit,amount){
+Date.prototype.sub = function(amount,unit){
 	this.calc(unit,amount,false);
 	return this;
 }
@@ -1475,7 +1022,7 @@ Date.prototype.sub = function(unit,amount){
  * unit:时间单位 可能的值为 day,hour,minute
  * amount:数量。
  */
-Date.prototype.add = function(unit,amount){
+Date.prototype.add = function(amount,unit){
 	this.calc(unit,amount,true);
 	return this;
 }
@@ -1486,15 +1033,14 @@ Date.prototype.add = function(unit,amount){
 Date.prototype.calc = function(unit,amount,add){
 	var time=0;
 	switch(unit){
-		case "day":
-			time=24*60*60*1000*amount;
-			break;
-		case "hour":
-			time=60*60*1000*amount;
-			break;
-		case "minute":
+		case 1:
 			time=60*1000*amount;
 			break;
+		case 2:
+			time=60*60*1000*amount;
+			break;
+		default :
+			time=24*60*60*1000*amount;
 	}
 	if(add){
 		this.setTime(this.getTime()+time);
@@ -1513,6 +1059,33 @@ Date.prototype.calc = function(unit,amount,add){
  */
 Date.prototype.subtract = function(date,format){
 	  var minute= (this.getTime() - date.getTime())/(60 * 1000);
+	  var day=parseInt(minute / (24*60));
+	  var hour=parseInt(minute / 60);
+	  var rtn=0;
+	  switch(format){
+	    //分钟
+	  	case 1:
+	  		rtn=minute  ;
+	  		break;
+	  	//小时
+	  	case 2:
+	  		rtn=hour ;
+	  		break;
+	  	//天数
+	  	default :
+	  		rtn=day +1;
+	  }
+	  return rtn;
+}
+
+/**
+ * 两个日期相加。
+ * @param date 			被加的日期类型数据
+ * @param format		返回数据类型(1,分钟,2,小时,乱填或者默认则认为是天数)
+ * @returns {Number}
+ */
+Date.prototype.addDate = function(date,format){
+	  var minute= (this.getTime() + date.getTime())/(60 * 1000);
 	  var day=parseInt(minute / (24*60));
 	  var hour=parseInt(minute / 60);
 	  var rtn=0;
@@ -1591,29 +1164,31 @@ Date.prototype.diff = function(date,format){
 }
 
 
+AryUtil={};
+
 /**
- * icon选择器
- * 用法示例,
- * _IconSelectDlg(function(icon){
-			console.log(icon);
-		});
- * */
-function _IconSelectDlg(callback){
-	_OpenWindow({
-		url:__rootPath+'/sys/core/file/iconSelectDialog.do',
-		height:450,
-		width:700,
-		iconCls:'icon-window',
-		title:'图标选择',
-		ondestroy:function(action){
-			if(action!='ok')return;
-			var iframe = this.getIFrameEl();
-            var icon = iframe.contentWindow.getIcon();
-            if(callback){
-            	callback.call(this,icon);
-            }
+ * 是否在数组中存在。
+ */
+AryUtil.isExist=function(data,val){
+	for(var i=0;i<data.length;i++){
+		var tmp=data[i];
+		if(tmp==val){
+			return true;
 		}
-	});
+	}
+	return false;
+}
+/**
+ * 判断数组中键值为指定的值是否存在。
+ */
+AryUtil.isKeyExist=function(ary,key,val){
+	for(var i=0;i<ary.length;i++){
+		var obj=ary[i];
+		if(obj[key]==val){
+			return true;
+		}
+	}
+	return false;
 }
 
 
@@ -1795,7 +1370,7 @@ function bindFields_(returnFields,data){
 		if(!field.bindField) continue;		
 		if(field.bindField.endWith("_name"))continue;
 		var ctl=mini.getByName(field.bindField);
-		if(ctl){
+		if(ctl&&ctl.doValueChanged){
 			ctl.doValueChanged();
 		}
 	}
@@ -1943,181 +1518,11 @@ function isExist(ary,id){
 	return false;
 }
 
-/**
- * 用户选择按钮点击事件
- * 
- * @param e
- */
-function _UserButtonClick(e){
-	var userSel=e.sender;
-	var single=userSel.single;
-	var name=userSel.name;
-	var text_name=name +"_name";
-	
-	var gridRow=getGridByEditor(userSel);
-	
-	var flag=single || single=="true"?true:false;
-	_UserDlg(flag,function(users){
-		if(flag){
-			if(window.top!=window.self  || !gridRow){
-				userSel.setValue(users.userId);
-				userSel.setText(users.fullname);
-				userSel.doValueChanged();
-			}
-			else{
-				var grid=gridRow.grid;
-				var obj={};
-				obj[name]=users.userId;
-				obj[text_name]=users.fullname;
-				grid.updateRow ( gridRow.row, obj );
-			}
-			
-		}else{
-			var uIds=[];
-			var uNames=[];
-			for(var i=0;i<users.length;i++){
-				uIds.push(users[i].userId);
-				uNames.push(users[i].fullname);
-			}
-			
-			if(window.top!=window.self || !gridRow){
-				userSel.setValue(uIds.join(','));
-				userSel.setText(uNames.join(','));
-				userSel.doValueChanged();
-			}
-			else{
-				var grid=gridRow.grid;
-				var obj={};
-				obj[name]=uIds.join(',');
-				obj[text_name]=uNames.join(',');
-				grid.updateRow ( gridRow.row, obj );
-				
-			}
-			
-		}
-	});
-}
-/**
- * 用户组选择按钮点击事件
- * 
- * @param e
- */
-function _GroupButtonClick(e){
-	var groupSel=e.sender;
-	var single=groupSel.single;
 
-	var gridRow=getGridByEditor(groupSel);
-	var name=groupSel.name;
-	var text_name=name +"_name";
-	
-	var showDim=groupSel.showDim;
 
-	var dimId=groupSel.dimId;
-	var callback=function(groups){
-		if(single ){
-			if(window.top!=window.self  || !gridRow){
-				groupSel.setValue(groups.groupId);
-				groupSel.setText(groups.name);
-				groupSel.doValueChanged();
-			}
-			else{
-				var grid=gridRow.grid;
-				var obj={};
-				obj[name]=groups.groupId;
-				obj[text_name]=groups.name;
-				grid.updateRow ( gridRow.row, obj );
-			}
-			
-		}else{
-			var uIds=[];
-			var uNames=[];
-			for(var i=0;i<groups.length;i++){
-				uIds.push(groups[i].groupId);
-				uNames.push(groups[i].name);
-			}
-			
-			if(window.top!=window.self  || !gridRow){
-				groupSel.setValue(uIds.join(','));
-				groupSel.setText(uNames.join(','));
-				groupSel.doValueChanged();
-			}
-			else{
-				var grid=gridRow.grid;
-				var obj={};
-				obj[name]=uIds.join(',');
-				obj[text_name]=uNames.join(',');
-				grid.updateRow ( gridRow.row, obj );
-			}
-			
-		}
-		
-	};
-	
-	if(showDim){
-		_GroupDlg(single,callback);
-	}else{
-		_GroupSingleDim(single,dimId,callback);
-	}
-}
 
-/**
- * 部门按钮的点击事件
- * 
- * @param e
- */
-function _DepButtonClick(e){
-	var depSel=e.sender;	
-	var single=depSel.single;	
-	var config=depSel.config;
-	
-	if(config){
-		config = mini.encode(config);
-		config = config.replace(/"([^"]*)"/g, "'$1'");
-	}
 
-	
-	var gridRow=getGridByEditor(depSel);
-	var name=depSel.name;
-	var text_name=name +"_name";
 
-	var callback=function(groups){
-		if(single){
-			if(window.top!=window.self  || !gridRow){
-				depSel.setValue(groups.groupId);
-				depSel.setText(groups.name);
-			}
-			else{
-				var grid=gridRow.grid;
-				var obj={};
-				obj[name]=groups.groupId;
-				obj[text_name]=groups.name;
-				grid.updateRow ( gridRow.row, obj );
-			}
-		}else{
-			var uIds=[];
-			var uNames=[];
-			for(var i=0;i<groups.length;i++){
-				uIds.push(groups[i].groupId);
-				uNames.push(groups[i].name);
-			}
-			
-			if(window.top!=window.self  || !gridRow){
-				depSel.setValue(uIds.join(','));
-				depSel.setText(uNames.join(','));
-				depSel.doValueChanged();
-			}
-			else{
-				var grid=gridRow.grid;
-				var obj={};
-				obj[name]=uIds.join(',');
-				obj[text_name]=uNames.join(',');
-				grid.updateRow ( gridRow.row, obj );
-			}
-		}
-		
-	};
-	_DepDlg(single,config,callback);
-}
 
 
 
@@ -2162,10 +1567,8 @@ function isExitsFunction(funcName) {
 function isExitsVariable(variableName) {
     try {
         if (typeof(variableName) == "undefined") {
-            //alert("value is undefined"); 
             return false;
         } else {
-            //alert("value is true"); 
             return true;
         }
     } catch(e) {}
@@ -2332,30 +1735,7 @@ function _ConvertFormData(formData){
 	}
 }
 
-/**
- * 用户选择按钮点击事件
- * 
- * @param e
- */
-function _RelatedSolutionButtonClick(EL,config){
-	var relatedSolutionSel=EL;
-	var chooseitem=relatedSolutionSel.chooseitem;
-	var flag=chooseitem=="single"?"false":"true";
-	_OpenWindow({
-		url: __rootPath+"/bpm/core/bpmInst/dialog.do?flag="+flag+"&solId="+relatedSolutionSel.solution,
-        title: "选择实例",
-        width: 700, height: 600,
-        ondestroy: function(action) {
-            if (action == 'ok') {
-            	var iframe = this.getIFrameEl();
-            	var instances=iframe.contentWindow.getInstances();
-            	if(config.callback){
-                    config.callback.call(this,instances);
-                }
-            }
-        }
-	});
-}
+
 
 
 function _ClearButtonEdit(e){
@@ -2381,7 +1761,7 @@ function handClick(btn,callback){
             // 鼠标移出的延时时间
             outDuring: 200,
             // 鼠标经过执行的方法
-            hoverEvent: function(){
+            hoverEvent: function(e){
                 // 设置为空函数，绑定的时候由使用者定义
                 $.noop();
             },
@@ -2392,11 +1772,11 @@ function handClick(btn,callback){
         };
         var sets = $.extend(defaults,options || {});
         var hoverTimer, outTimer;
-        return $(this).each(function(){
-            $(this).hover(function(){
+        return $(this).each(function(e){
+            $(this).hover(function(e){
                 // 清除定时器
                 clearTimeout(outTimer);
-                hoverTimer = setTimeout(sets.hoverEvent,
+                hoverTimer = setTimeout(sets.hoverEvent(e),
                     sets.hoverDuring);
                 }, function(){
                     clearTimeout(hoverTimer);
@@ -2413,7 +1793,7 @@ function handClick(btn,callback){
  * alias ： 自定义SQL别名
  * params ：自定义SQL的参数{参数名1:参数值1}
  * callBack : 执行自定义SQL的回调函数。
- * sync ： 是否同步执行
+ * async ： 是否同步执行
  * 
  * 调用方法：
  * doQuery("user",params,function(data){
@@ -2436,8 +1816,45 @@ function doQuery(alias, params,callBack,async){
 			}
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
-			alert("出错,错误码=" + XMLHttpRequest.status);
-			alert("出错=" + XMLHttpRequest.responseText);
+			mini.alert("出错,错误码=" + XMLHttpRequest.status);
+			mini.alert("出错=" + XMLHttpRequest.responseText);
+		}
+	}
+	if(params){
+		var type=typeof params;
+		if(type=="object"){
+			params=mini.encode(params);
+		}
+		var data={"params":params};
+		config.data= data;
+	}
+	$.ajax(config);
+}
+
+/**
+ * 执行服务端调用脚本。
+ * @param alias		脚本别名
+ * @param params	参数
+ * @param callBack	回调函数
+ * @param async		是否异步
+ * @returns
+ */
+function doExcute(alias, params,callBack,async){
+	async=async || false;
+	var url=__rootPath+"/sys/core/sysInvokeScript/invoke/"+alias+".do";
+	url=encodeURI(url);
+	var config={
+		url : url,
+		type : "POST",
+		async : async,
+		success : function(result, status) {				
+			if (result.success && callBack) {
+				callBack(result.data);
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			mini.alert("出错,错误码=" + XMLHttpRequest.status);
+			mini.alert("出错=" + XMLHttpRequest.responseText);
 		}
 	}
 	if(params){
@@ -2587,79 +2004,11 @@ function openNewWindow(url,name){
 	} else {  
 	   fulls += ",resizable"; // 对于不支持screen属性的浏览器，可以手工进行最大化。 manually  
 	}  
-	var newWindow=window.open(url,name,fulls);
+	var newWindow=window.open(url);
 	return newWindow;
 }  
 
-/**
- * 打开office文档。
- * @param fileId
- * @returns
- */
-function _openDoc(fileId){
-	var url=__rootPath +"/scripts/customer/doc.jsp?fileId=" + fileId;
-	openNewWindow(url,"officeDoc");
-}  
 
-/**
- * 打开pdf文档。
- * @param fileId
- * @returns
- */
-function _openPdf(fileId){
-	var url=__rootPath+'/scripts/PDFShow/web/viewer.html?file='+
-	__rootPath+'/sys/core/file/download/'+fileId+'.do';
-	openNewWindow(url,"officePdf");
-}
-
-/**
- * 打开图片。
- * @param fileId
- * @returns
- */
-function _openImg(fileId){
-	var url=__rootPath+'/scripts/customer/img.jsp?fileId='+fileId;
-	openNewWindow(url,"officeIMG");
-}
-
-
-function _ShowTenantInfo(instId){
-	_OpenWindow({
-		title:'机构信息',
-		iconCls:'icon-group',
-		height:480,
-		width:780,
-		url:__rootPath+'/sys/core/sysInst/get.do?pkId='+instId
-	});
-}
-
-function _ShowUserInfo(userId){
-	_OpenWindow({
-		title:'用户信息',
-		iconCls:'icon-user',
-		height:480,
-		width:780,
-		url:__rootPath+'/sys/org/osUser/get.do?pkId='+userId
-	});
-}
-
-function _ShowGroupInfo(groupId){
-	_OpenWindow({
-		title:'用户组信息',
-		iconCls:'icon-group',
-		height:480,
-		width:780,
-		url:__rootPath+'/sys/org/osGroup/detail.do?groupId='+groupId
-	});
-}
-
-/**
- * 显示审批明细
- */
-function _ShowBpmInstInfo(instId){
-	var url=__rootPath+'/bpm/core/bpmInst/inform.do?instId='+ instId;
-	window.open(url);
-}
 
 /**
  * 打开列表中外部关联数据窗口
@@ -2705,13 +2054,13 @@ $(document)
 		window.location.href = __rootPath+"/index.do";
 	})
 	.on('mouseover','.top_icon li',function(){
-		$(this).children('dl').stop(false,true).slideDown(300);
+		$(this).children('dl').stop(true,true).slideDown(300);
 	})
 	.on('mouseleave','.top_icon li',function(){
-		$(this).children('dl').stop(false,true).slideUp(100);
+		$(this).children('dl').stop(true,true).slideUp(100);
 	})
 	.on('click' , '.mini-tips .icon-tips-Close' , function(){//提前关闭弹窗
-		$(this).parent().slideUp(400);
+		$(this).parents(".mini-tips").slideUp(400);
 	})
 	.on('click' , '.refreshWelcome' , function(){//刷新首页
 		$('#welcome', parent.document ).attr('src',$('#welcome', parent.document ).attr('src'));
@@ -2722,11 +2071,11 @@ $(document)
 				if(!grid)return;
 				grid.on('load',function(e){
 					if(e.data.length>14){//大于15条数据展开搜索框
-						$('.searchSelectionBtn').trigger("click").addClass('_open').prev('.search-form').show();
+						//$('.searchSelectionBtn').trigger("click").addClass('_open').prev('.search-form').show();
 						
 					}else if(e.data.length == 0 && !$('.listEmpty').length){
-						$('.mini-panel-body .mini-grid-rows-view').append("<div class='listEmpty'><img src='"+__rootPath+"/styles/images/index/empty.png'/><span>暂无数据</span></div>");
-					}else if($('.listEmpty').length){
+						$('#'+grid.id+' .mini-panel-body .mini-grid-rows-view').append("<div class='listEmpty'><img src='"+__rootPath+"/styles/images/index/empty.png'/><span>暂无数据</span></div>");
+					}else if(e.data.length>0 && $('.listEmpty').length){
 						$('.listEmpty').remove();
 					}
 				})
@@ -2743,7 +2092,8 @@ $(document)
  */
 function getGridByEditor(editor) {
     var grids = mini.findControls(function (control) {
-        if (control.type == "datagrid") return true;
+    	var type=control.type;
+        if (type == "datagrid" || type == "treegrid" ) return true;
     })
     for (var i = 0, l = grids.length; i < l; i++) {
         var grid = grids[i];
@@ -2776,8 +2126,20 @@ function no_search(This,ID){
 	$(This).toggleClass("_open");
 	$("#"+ID+"").slideToggle(300);
 	setTimeout("mini.layout()",300);
+	/*$(This).parents("body").find(".toolBtnBox").toggleClass("toolBtnBoxTop");*/
 }
-
+/*“更多”展开收起*/
+ function no_more(This,ID){
+ 	var texts = $(This).find("em").text();
+ 	if (texts == "展开"){
+		$(This).find("em").text("收起");
+	}else{
+		$(This).find("em").text("展开");
+	}
+	 $(This).find(".unfoldIcon").toggleClass("upIcon");
+	 $("#"+ID+"").slideToggle(300);
+	 setTimeout("mini.layout()",300);
+ }
 /*
  * 打印
  */
@@ -2866,6 +2228,213 @@ Number.prototype.format=function(decimals, dec_point, thousands_sep){
    return s.join(dec);
 }
 
+function _OnGridEditDialogShow(e){
+		var button=e.sender;
+		var dialogalias=button.dialogalias;
+		
+		if(!dialogalias) return; 
+		var conf={
+				dialogKey:dialogalias,
+				params:'',
+				ondestroy:function(data){
+					var rtn=data.rows;
+					
+					var grid = mini.get("datagrid1");
+					var rowID=button.ownerRowID;
+					var row=grid.getRowByUID(rowID);
+					var copyRow=$.extend(true, {}, row);
+
+					//设置绑定值
+					var returnFields=button.returnFields;
+					for(var i=0,j=returnFields.length;i<j;i++){
+						var ob=returnFields[i];
+						if(!ob.bindField) continue;
+						var fieldVal=[];
+						for(var m=0,n=rtn.length;m<n;m++){
+							if(rtn[m][ob.field]){
+								fieldVal.push(rtn[m][ob.field]);
+							}
+						}
+						copyRow[ob.bindField]=fieldVal.join(",");
+					}
+					
+					//显示值   valuefield
+					var value=[];
+					//var text=[];
+					for(var m=0,n=rtn.length;m<n;m++){
+						if(rtn[m][button.valuefield]){
+							value.push(rtn[m][button.valuefield]);
+						}
+					}
+					
+					//设置编辑框 文本  值
+					
+					var val=value.join(",");
+					
+					button.setText(val);
+					button.setValue(val);
+					button.doValueChanged();
+					
+					copyRow[button.field]=val;
+					//更新行
+					grid.updateRow(row,copyRow);
+				}
+		};
+		_CommonDialogExt(conf);
+}
+
+/**
+ * 初始化帮助。
+ * <div class="div-helper" >
+ *		<div  class="iconfont icon-helper icon-Help-configure" title="帮助" helpid="formulaHelp" placement="w"></div>
+ *	</div>
+ * helpid：指向一个div 这个div 是具体的帮助内容。
+ * placement:w:西，e:东，n:北,s :南
+ * @returns
+ */
+function initHelp(){
+	$(".helper").each(function(){
+		var o=$(this);
+		var helpid=o.attr("helpid");
+		var placement=o.attr("placement") || "e";
+		var html=$("#" + helpid).html();
+		o.data('powertip',html);
+		o.powerTip({
+		     placement: placement,
+		     mouseOnToPopup: true
+		 });
+	})
+}
+
+/**
+ * 传入别名获取流水号的JS方法。
+ * @param alias		流水号别名
+ * @param callBack	回调方法
+ * @param async		是否异步调用
+ * @returns
+ */
+function getSeqNo(alias,callBack,async){
+	var url=__rootPath +"/sys/core/sysSeqId/genNo_" + alias +".do";
+	if(async==undefined) async=true;
+	
+	var config={
+		url : url,
+		type : "GET",
+		async : async,
+		success : function(result, status) {				
+			if (result && callBack) {
+				callBack(result);
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			mini.alert("出错,错误码=" + XMLHttpRequest.status);
+			mini.alert("出错=" + XMLHttpRequest.responseText);
+		}
+	}
+	$.ajax(config);
+}
+
+/**
+ * 调用自定义web请求。
+ * @param key		    别名
+ * @param paramsData	传入参数
+ * @param callBack   	回调函数 
+ */
+function startWebReqDef(key,paramsData,callBack){
+	var url=__rootPath +"/sys/webreq/sysWebReqDef/start.do";
+	//if(async==undefined) async=true;
+	var json={key:key,paramsData:paramsData};
+	$.post(url,json,function(rtn){
+		callBack(rtn);
+	})
+}
+
+/**
+ * 调用脚本。
+ * @param alias		别名
+ * @param params	传入参数
+ * @param callBack	回调函数 
+ * 参数结构
+ * {
+ * 	success:true,false
+ * 	message:返回结果提示
+ * 	data:调用服务端脚本返回数据
+ * }
+ * @returns
+ */
+function invokeScript(alias,params,callBack){
+	var url=__rootPath +"/sys/core/sysInvokeScript/invoke/" + alias+".do";
+	var json={params:params};
+	$.post(url,json,function(rtn){
+		callBack(rtn);
+	})
+}
 
 
+/**
+ * 在父元素中，查询指定类型的控件。
+ * @param el
+ * @param type
+ * @returns
+ */
+function getControl(el,type){
+	var ctls=mini.getChildControls(el);
+	for(var i=0;i<ctls.length;i++){
+		var ctl=ctls[i];
+		if(ctl.type==type){
+			return ctl;
+		}
+	}
+	return null;
+}
 
+/**
+ * mini-buttonedit-input控件中的清空图标的清空功能
+ */
+function _OnButtonEditClear(e){
+	var btn=e.sender;
+	btn.setText('');
+	btn.setValue('');
+}
+
+/**
+ * 删除表格数据。
+ * @param data
+ * @returns
+ */
+function _RemoveGridData(data){
+	for(var i=0;i<data.length;i++){
+  		var row=data[i];
+  		delete row._id;
+  		delete row._uid;
+  		delete row._state;
+  	}
+}
+
+ /**
+  * 回填子表数据
+  */
+ function _SetSubData(data,formId){
+	 var formContainer=$(formId);
+	 var subTableList =[];
+	 /**
+	  * 获取子表对象。
+	  */
+	 $('.mini-datagrid,.mini-treegrid',formContainer).each(function(){
+		 var grid=mini.get(this.id);
+		 subTableList.push(grid);
+	 });
+	 if(subTableList.length>0){
+		 for(var i=0;i<subTableList.length;i++){
+			 var gridObj =subTableList[i];
+			 var gridName =gridObj.name;
+			 gridName="SUB_" +gridName.replace("grid_","");
+			 for(var key in data){
+				 if(gridName==key){
+					 gridObj.setData(data[key]);
+					 break;
+				 }
+			 }
+		 }
+	 }
+ }

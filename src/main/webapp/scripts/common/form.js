@@ -118,7 +118,7 @@ mini.VTypes["isChinesePhone"] = function (v) {
  */
 mini.VTypes["isChineseMobileErrorText"] = "必须输入合法中国手机号码";
 mini.VTypes["isChineseMobile"] = function (v) {
-	var re=new RegExp("^((13[0-9])|(15[^4,\\D])|(18[0,2,3,5-9]))\\d{8}$");
+	var re=new RegExp("^((13[0-9])|(17[0-9])|(15[^4,\\D])|(18[0,2,3,5-9]))\\d{8}$");
     if (re.test(v)) return true;
     return false;
 }
@@ -389,12 +389,7 @@ function onUniqueValidation(e){
 	}
 	var el=$(sender.el);
 	var parent=el.closest("div[boDefId]");
-	if(parent.length==0){
-		parent=$("form-panel");
-	}
-	
-	var bodefObj= mini.getByName("bo_Def_Id_", parent[0]);
-	var boDefId= bodefObj.getValue();
+	var boDefId= parent.attr("boDefId");
 	var pk=mini.getByName("ID_",parent[0]);
 	var data={"value":e.value,"boDefId":boDefId,"fieldName":e.sender.name};
 	if(pk){
@@ -629,6 +624,39 @@ function genTagHtml(tag,attrs){
 	return str;
 }
 
+/**
+ * 根据汉字获取拼音。
+ * @param name	目标控件ID
+ * @param val	输入的汉字
+ * @returns
+ */
+function getPy(name,val){
+	if(!val) return; 
+	var key=mini.get(name);
+	if(!key) return;
+	if(key.getValue()) return;
+	$.ajax({
+		url:__rootPath+'/pub/base/baseService/getPinyin.do',
+		method:'POST',
+		data:{words:val,isCap:'false',isHead:'true'},
+		success:function(result){
+			key.setValue(result.data);
+		}
+	});
+	
+}
 
-
+/**
+ * 将汉字转换成拼音。
+ * @param val		汉字
+ * @param callBack	回调方法。
+ * @returns
+ */
+function convertToPy(val,callBack){
+	if(!val) return;
+	var url=__rootPath+'/pub/base/baseService/getPinyin.do';
+	$.post(url,{words:val,isCap:'false',isHead:'true'},function(result){
+		callBack(result.data)
+	})
+}
 

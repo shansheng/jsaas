@@ -14,7 +14,8 @@
 	<script type="text/javascript" src="${ctxPath}/scripts/share.js" ></script>
 	<script type="text/javascript" src="${ctxPath}/scripts/indexPublic.js"></script>
 	<script type="text/javascript" src="${ctxPath}/scripts/common/baiduTemplate.js"></script>
-	<link type="text/css" rel="stylesheet" href="${ctxPath}/styles/css/manage3.css" />
+	<link type="text/css" rel="stylesheet" href="${ctxPath}/scripts/index/index4/manage3.css" />
+	<link type="text/css" rel="stylesheet" href="${ctxPath}/styles/commons.css" />
 </head>
 <body>
 	<ul 

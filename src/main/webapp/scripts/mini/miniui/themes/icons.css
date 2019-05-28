@@ -1,125 +1,2447 @@
-﻿.icon-add{
-	background:url(icons/add.gif) no-repeat;
-}
-.icon-addnew{
-	background:url(icons/addnew.gif) no-repeat;
-}
-.icon-edit{
-	background:url(icons/edit.gif) no-repeat;
-}
-.icon-remove{
-	background:url(icons/remove.gif) no-repeat;
-}
-.icon-save{
-	background:url(icons/save.gif) no-repeat;
-}
-.icon-close{
-	background:url(icons/cancel.gif) no-repeat;
-}
-.icon-cut{
-	background:url(icons/cut.png) no-repeat;
-}
-.icon-ok{
-	background:url(icons/ok.png) no-repeat;
-}
-.icon-no{
-	background:url(icons/no.png) no-repeat;
-}
-.icon-cancel{
-	background:url(icons/cancel.gif) no-repeat;
-}
-.icon-reload{
-	background:url(icons/reload.png) no-repeat;
-}
-.icon-search{
-	background:url(icons/search.gif) no-repeat;
-}
-.icon-print{
-	background:url(icons/print.gif) no-repeat;
-}
-.icon-help{
-	background:url(icons/help.gif) no-repeat;
-	
-}
-.icon-undo{
-	background:url(icons/undo.gif) no-repeat;
-}
-.icon-redo{
-	background:url(icons/redo.gif) no-repeat;
-}
-.icon-tip{
-	background:url(icons/tip.png) no-repeat;
-}
-.icon-zoomin{
-	background:url(icons/zoomin.gif) no-repeat;
-}
-.icon-zoomout{
-	background:url(icons/zoomout.gif) no-repeat;
-}
-.icon-goto{
-	background:url(icons/goto.gif) no-repeat;
-}
-.icon-date{
-	background:url(icons/date.gif) no-repeat;
-}
-.icon-filter{
-	background:url(icons/filter.gif) no-repeat;
-}
-.icon-find{
-	background:url(icons/find.png) no-repeat;
-}
-.icon-folder{
-	background:url(icons/folder.gif) no-repeat;
-}
-.icon-folderopen{
-	background:url(icons/folder-open.gif) no-repeat;
-}
-.icon-lock{
-	background:url(icons/lock.png) no-repeat;
-}
-.icon-unlock{
-	background:url(icons/unlock.gif) no-repeat;
-}
-.icon-new{
-	background:url(icons/new.gif) no-repeat;
-}
-.icon-node{
-	background:url(icons/node.png) no-repeat;
-}
-.icon-nowait{
-	background:url(icons/nowait.gif) no-repeat;
-}
-.icon-sort{
-	background:url(icons/sort.gif) no-repeat;
-}
-.icon-wait{
-	background:url(icons/wait.gif) no-repeat;
-}
-.icon-upgrade{
-	background:url(icons/upgrade.gif) no-repeat;
-}
-.icon-downgrade{
-	background:url(icons/downgrade.gif) no-repeat;
-}
-.icon-download{
-	background:url(icons/download.gif) no-repeat;
-}
-.icon-upload{
-	background:url(icons/upload.gif) no-repeat;
-}
-.icon-user{
-	background:url(icons/user.png) no-repeat;
-}
-.icon-split{
-	background:url(icons/split.gif) no-repeat;
-}
-.icon-addfolder{
-	background:url(icons/addfolder.gif) no-repeat;
+@charset "utf-8";
+/* 修改 */
+@font-face {
+    font-family: 'iconfont';
+    src: url('font/iconfont.eot');
+    src: url('font/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('font/iconfont.svg#iconfont') format('svg'),
+    url('font/iconfont.woff') format('woff'),
+    url('font/iconfont.ttf') format('truetype');
 }
 
-.icon-expand{
-	background:url(icons/expand.gif) no-repeat;
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 14px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    /*-webkit-text-stroke-width: 0.2px; */
+    -moz-osx-font-smoothing: grayscale;
 }
-.icon-collapse{
-	background:url(icons/collapse.gif) no-repeat;
+
+body i {
+    font-family: "iconfont" !important;
+    font-size: 14px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.icon-button {
+    font-family: "iconfont" !important;
+    font-size: 14px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    /*-webkit-text-stroke-width: 0.2px; */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.mini-iconfont, .mini-button-icon, .mini-tab-icon, .mini-tab-icon, .mini-tree .mini-tree-icon, .rx-font {
+    font-family: "iconfont" !important;
+    font-size: 14px;
+}
+
+
+/* 菜单导航 */
+
+.sidebar_btn_up:before {
+    content: "\e850";
+    font-size: 14px;
+}
+
+.sidebar_btn_down:before {
+    content: "\e84f";
+    font-size: 14px;
+}
+
+.icon-more:before {
+    content: "\e8cc";
+    font-size: 14px;
+}
+
+/* 导航栏 */
+.icon-company:before {
+    content: "\e62a";
+    font-size: 14px;
+}
+
+.icon-emails:before {
+    content: "\e719";
+    font-size: 14px;
+}
+
+.icon-news:before {
+    content: "\e621";
+    font-size: 14px;
+}
+
+
+/*-------- 顶部导航栏 start---------- */
+.icon-Office-collaboration:before {
+    content: "\e7bb";
+    font-size: 14px;
+
+}
+
+.icon-Process-management:before {
+    content: "\e636";
+    font-size: 14px;
+
+}
+
+.icon-Knowledge-subsystem:before {
+    content: "\e615";
+    font-size: 14px;
+
+}
+
+.icon-shouqi3:before {
+    content: "\e8cd";
+}
+
+.icon-zhankai3:before {
+    content: "\e8ce";
+}
+
+.icon-Document-subsystem:before {
+    content: "\e64c";
+    font-size: 14px;;
+}
+
+.icon-system-configuration:before {
+    content: "\e67e";
+    font-size: 14px;;
+}
+
+.icon-Help-configure:before {
+    content: "\e600";
+    font-size: 14px;
+}
+
+/*-------- 顶部导航栏 end---------- */
+
+/*-------- 一级菜单导航 start---------- */
+
+/** 协同 **/
+.icon-public:before {
+    content: "\e65f";
+    font-size: 14px;
+}
+
+
+.icon-personal_office:before {
+    content: "\ec4d";
+    font-size: 14px;
+}
+
+.icon-document-management:before {
+    content: "\e60e";
+    font-size: 14px;
+}
+
+.icon-tasks:before {
+    content: "\e632";
+    font-size: 14px;
+}
+
+.icon-email:before {
+    content: "\e719";
+    font-size: 14px;
+}
+
+
+.icon-Check-work:before {
+    content: "\e664";
+    font-size: 14px;
+}
+
+.icon-xitongguanli:before {
+    content: "\e60c";
+    font-size: 14px;
+}
+
+/**大图50--------------------------------------**/
+.icon-entform:before {
+    content: "\e65c";
+    font-size: 14px;
+}
+
+.icon-user-org-50:before {
+    content: "\e86f";
+    font-size: 14px;
+}
+
+.icon-form-edit-50:before {
+    content: "\e83d";
+    font-size: 14px;
+}
+
+.icon-flow-design-50:before {
+    content: "\e83e";
+    font-size: 14px;
+}
+
+.icon-mobile-50:before {
+    content: "\e86b";
+    font-size: 14px;
+}
+
+.icon-solution-50:before {
+    content: "\e869";
+    font-size: 14px;
+}
+
+.icon-grant-50:before {
+    content: "\e874";
+    font-size: 14px;
+}
+
+.icon-list-50:before {
+    content: "\e83a";
+    font-size: 14px;
+}
+
+.icon-dialog-50:before {
+    content: "\e838";
+    font-size: 14px;
+}
+
+.icon-search-50:before {
+    content: "\e870";
+    font-size: 14px;
+}
+
+.icon-seq-no-50:before {
+    content: "\e843";
+    font-size: 14px;
+}
+
+.icon-book-50:before {
+    content: "\e83c";
+    font-size: 14px;
+}
+
+.icon-database-50:before {
+    content: "\e844";
+    font-size: 14px;
+}
+
+.icon-bpm-inst-50:before {
+    content: "\e873";
+    font-size: 14px;
+}
+
+.icon-bpm-task-50:before {
+    content: "\e836";
+    font-size: 14px;
+}
+
+.icon-form-sol-50:before {
+    content: "\e842";
+    font-size: 14px;
+}
+
+.icon-vpn-50:before {
+    content: "\e784";
+    font-size: 14px;
+}
+
+.icon-network-50:before {
+    content: "\e789";
+    font-size: 14px;
+}
+
+.icon-kancha-50:before {
+    content: "\e786";
+    font-size: 14px;
+}
+
+.icon-ele-50:before {
+    content: "\e788";
+    font-size: 14px;
+}
+
+.icon-data-50:before {
+    content: "\e78d";
+    font-size: 14px;
+}
+
+.icon-gdata-50:before {
+    content: "\e78b";
+    font-size: 14px;
+}
+
+.icon-centrex-50:before {
+    content: "\e78c";
+    font-size: 14px;
+}
+
+/******18 size********/
+
+.icon-user-org-18:before {
+    content: "\ec4e";
+    font-size: 14px;
+}
+
+.icon-form-edit-18:before {
+    content: "\e71d";
+    font-size: 14px;
+}
+
+.icon-flow-design-18:before {
+    content: "\e781";
+    font-size: 14px;
+}
+
+.icon-mobile-18:before {
+    content: "\e778";
+    font-size: 14px;
+}
+
+.icon-solution-18:before {
+    content: "\e779";
+    font-size: 14px;
+}
+
+.icon-grant-18:before {
+    content: "\e775";
+    font-size: 14px;
+}
+
+.icon-list-18:before {
+    content: "\e77a";
+    font-size: 14px;
+}
+
+.icon-dialog-18:before {
+    content: "\e77b";
+    font-size: 14px;
+}
+
+.icon-search-18:before {
+    content: "\e68c";
+    font-size: 14px;
+}
+
+.icon-seq-no-18:before {
+    content: "\e77c";
+    font-size: 14px;
+}
+
+.icon-book-18:before {
+    content: "\e77d";
+    font-size: 14px;
+}
+
+.icon-database-18:before {
+    content: "\e77e";
+    font-size: 14px;
+}
+
+.icon-bpm-inst-18:before {
+    content: "\e780";
+    font-size: 14px;
+}
+
+.icon-bpm-task-18:before {
+    content: "\e783";
+    font-size: 14px;
+}
+
+.icon-form-sol-18:before {
+    content: "\e749";
+    font-size: 14px;
+}
+
+
+/* 流程子系统 */
+
+.icon-Business-solution:before {
+    content: "\e61a";
+    font-size: 14px;
+}
+
+.icon-Process-design:before {
+    content: "\e638";
+    font-size: 14px;
+}
+
+.icon-Process-LDAP:before {
+    content: "\e6f1";
+    font-size: 14px;
+}
+
+.icon-Business-model-Design:before {
+    content: "\e639";
+    font-size: 14px;
+}
+
+.icon-Business-form-Design:before {
+    content: "\e65c";
+    font-size: 14px;
+}
+
+.icon-Process-instance:before {
+    content: "\e698";
+    font-size: 14px;
+}
+
+.icon-need-do:before {
+    content: "\e619";
+    font-size: 14px;
+}
+
+.icon-Process-module:before {
+    content: "\e611";
+    font-size: 14px;
+}
+
+.icon-task-notice:before {
+    content: "\e628";
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-business-model:before {
+    content: "\e639";
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-process-auth:before {
+    content: "\e775";
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+/* add by zyg start 2017-6-9*/
+
+.icon-process-auth:before {
+    content: "\e775";
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-mobile-form:before {
+    content: "\e771";
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-form-template:before {
+    content: "\e773";
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-form-setting:before {
+    content: "\e772";
+    font-size: 14px;
+}
+
+.icon-form-metadata:before {
+    content: "\e770";
+    font-size: 14px;
+}
+
+/* add by zyg end 2017-6-9*/
+
+
+/* 知识子系统 */
+
+.icon-Knowledge-management:before {
+    content: "\e65a";
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-zhishicangku:before {
+    content: "\e60a";
+
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-warehouse-management:before {
+    content: "\e655";
+
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-Knowledge-quiz:before {
+    content: "\e6e4";
+
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-Knowledge-quizlist:before {
+    content: "\e734";
+
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-expertlist:before {
+    content: "\e6f1";
+
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-User-level:before {
+    content: "\e6f9";
+
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-map-list:before {
+    content: "\e651";
+
+    /* padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-homepage:before {
+    content: "\e63d";
+}
+
+
+/*一级菜单（公文子系统）*/
+.icon-configure:before {
+    content: "\e610";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-Get-into:before {
+    content: "\e657";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+/*一级菜单（系统配置）*/
+.icon-system-management:before {
+    content: "\e66a";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-zuzhiguanli:before {
+    content: "\ea72";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-topOrg:before {
+    content: "\ea72";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+
+.icon-Organization-management:before {
+    content: "\e63a";
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-Portal-information:before {
+    content: "\e609";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-WeChat-public:before {
+    content: "\e60f";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 500; */
+}
+
+.icon-window:before {
+    content: "\e823";
+
+    font-size: 22px;
+}
+
+.icon-authorization:before {
+    content: "\e72b";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 500; */
+}
+
+
+/*一级菜单（帮助系统）*/
+.icon-Basic-framework:before {
+    content: "\e685";
+
+    /* 	padding-right: 8px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+
+}
+
+.icon-skin:before {
+    content: "\e769";
+    /**/
+    /* 	padding-right: 6px; */
+    font-size: 14px;
+    /* 	font-weight: 600; */
+}
+
+.icon-phone:before {
+    content: "\e7ad";
+    font-size: 14px;
+}
+
+.icon-example:before {
+    content: "\e665";
+    font-size: 14px;
+}
+
+.icon-weixin:before {
+    content: "\e60f";
+    font-size: 14px;
+}
+
+
+/*-------- 一级菜单导航 end---------- */
+
+input.textbox {
+    padding: 2px;
+    border: solid 1px #ececec;
+    border-radius: 4px;
+}
+
+span.icon-button {
+    display: block;
+    cursor: pointer;
+    float: left;
+}
+
+
+.icon-up:before {
+    content: "\e88a";
+    font-size: 14px;
+}
+
+.icon-down:before {
+    content: "\e88f";
+    font-size: 14px;
+}
+
+.icon-shouqi1:before {
+    content: "\e856";
+}
+
+.icon-qingchu:before {
+    content: "\e876";
+}
+
+.icon-left:before {
+    content: "\e792";
+    font-size: 14px;
+}
+
+.icon-right:before {
+    content: "\e795";
+    font-size: 14px;
+}
+
+/*tab栏）*/
+.icon-detail:before {
+    content: "\e82a";
+}
+
+.icon-create:before {
+    content: "\e863";
+    font-size: 14px;
+}
+
+.icon-edit:before {
+    content: "\e72f";
+    font-size: 14px;
+}
+
+.icon-remove:before {
+    content: "\e674";
+}
+
+.icon-export:before {
+    content: "\e84e";
+}
+
+.icon-import:before {
+    content: "\e6c6";
+}
+
+.icon-refresh:before {
+    content: "\e82d";
+    font-size: 14px;
+}
+
+.icon-add:before {
+    content: "\e679";
+    font-size: 14px;
+}
+
+.icon-start:before {
+    content: "\e865";
+    font-size: 14px;
+}
+
+.icon-mgr:before {
+    content: "\e8f6";
+    font-size: 14px;
+}
+
+.icon-search:before {
+    content: "\e875";
+    font-size: 14px;
+}
+
+.icon-clear:before {
+    content: "\e864";
+    font-size: 14px;
+}
+
+.mini-tree-folder:before {
+    content: "\e6a1";
+}
+
+.mini-tree-leaf:before {
+    content: "\e66e";
+    font-size: 14px;
+}
+
+/* 10-23 去掉    源于我的附件         !important*/
+
+/*流程定义设计）*/
+.icon-flow-design:before {
+    content: "\e872";
+}
+
+.icon-version:before {
+    content: "\e8a3";
+    font-size: 14px;
+}
+
+.icon-upload:before {
+    content: "\e879";
+    font-size: 14px;
+}
+
+/*业务表单设计*/
+.icon-handle:before {
+    content: "\e71d";
+}
+
+.icon-property:before {
+    content: "\e88d";
+    font-size: 14px;
+}
+
+/* .icon-grant:before{ content: "\e688"; } */ /*11.6--重复*/
+.icon-clearbo:before {
+    content: "\e8d3";
+}
+
+
+/*待办任务管理*/
+.icon-handle:before {
+    content: "\e7f1";
+    font-size: 14px;
+}
+
+
+/* .icon-cancel:before { content: "\e7ac"; } */ /*11-6 重复*/
+
+/*业务模型设计*/
+.icon-unlock:before {
+    content: "\e86e";
+}
+
+.icon-lock:before {
+    content: "\e8a1";
+    font-size: 14px;
+}
+
+
+/*流程实例管理*/
+.icon-end:before {
+    content: "\e87b";
+}
+
+.icon-suspend:before {
+    content: "\e87a";
+}
+
+.mini-pager-next:before {
+    content: "\e88c";
+    font-size: 14px;
+}
+
+.mini-pager-prev:before {
+    content: "\e890";
+    font-size: 14px;
+}
+
+.mini-pager-last:before {
+    content: "\e859";
+    font-size: 14px;
+}
+
+.mini-pager-first:before {
+    content: "\e8a5";
+    font-size: 14px;
+}
+
+/*待办任务管理*/
+.icon-Relieve-user:before {
+    content: "\e6a2";
+    font-size: 14px;
+}
+
+.icon-activate:before {
+    content: "\e865";
+}
+
+.icon-commute:before {
+    content: "\e877";
+    font-size: 14px;
+}
+
+.mini-pager-reload:before {
+    content: "\e8b0";
+    font-size: 14px;
+}
+
+/*流程模块绑定*/
+.icon-save:before {
+    content: "\e858";
+    font-size: 14px;
+}
+
+.icon-close:before {
+    content: "\e7f3";
+    font-size: 14px;
+}
+
+.icon-draft:before {
+    content: "\e740";
+    font-size: 14px;
+}
+
+/*企业微信*/
+.icon-sync-user:before {
+    content: "\e76f";
+    font-size: 14px;
+}
+
+.icon-weixin:before {
+    content: "\e76e";;
+    font-size: 14px;
+}
+
+
+/*测试-方案配置*/
+.icon-prev:before {
+    content: "\e890";
+}
+
+.icon-next:before {
+    content: "\e88c";
+}
+
+.icon-flow-deploy:before {
+    content: "\e86e";
+}
+
+.icon-info:before {
+    content: "\e886";
+}
+
+.icon-flow:before {
+    content: "\e88b";
+}
+
+.icon-form:before {
+    content: "\e87e";
+}
+
+.icon-var:before {
+    content: "\e885";
+}
+
+.icon-user:before {
+    content: "\e884";;
+}
+
+.icon-user-dialog:before {
+    content: "\ec4d";
+}
+
+.icon-node:before {
+    content: "\e85b";
+}
+
+.icon-debug:before {
+    content: "\e8f6";
+    font-size: 14px;
+}
+
+.icon-grant:before {
+    content: "\e854";
+    font-size: 14px;
+}
+
+.icon-flow-white:before {
+    content: "\e6ee";
+}
+
+.icon-remove-all:before {
+    content: "\e811";
+}
+
+
+/*流程定义设置-流程定义管理明细*/
+.icon-download:before {
+    content: "\e8fe";
+}
+
+/*流程定义设置-流程定义版本管理*/
+.icon-main:before {
+    content: "\e891";
+    font-size: 14px;
+}
+
+.icon-addfolder:before {
+    content: "\e863";
+    padding-top: 5px;
+}
+
+.icon-collapse:before {
+    content: "\e89b";
+    font-size: 14px;
+}
+
+.icon-expand:before {
+    content: "\e899";
+    font-size: 14px;
+}
+
+.icon-rowbefore:before {
+    content: "\e89d";
+    font-size: 14px;
+}
+
+.icon-btn-mgr:before {
+    content: "\e6c0";
+}
+
+.icon-moveTo:before {
+    content: "\e8a0";
+}
+
+.icon-rowafter:before {
+    content: "\e89c";
+}
+
+.icon-modify-pwd:before {
+    content: "\e7e6";
+    font-size: 14px;
+}
+
+.icon-org-set:before {
+    content: "\e843";
+}
+
+.icon-rank:before {
+    content: "\e897";
+    font-size: 14px;
+}
+
+.icon-relation:before {
+    content: "\e898";
+}
+
+.icon-col-news:before {
+    content: "\e6a7";
+}
+
+/*个人办公-我的消息*/
+.icon-home:before {
+    content: "\e7d8";
+}
+
+.icon-tab:before {
+    content: "\e65c";
+}
+
+.icon-mailUp:before {
+    content: "\e6d8";
+}
+
+.icon-mailDown:before {
+    content: "\e765";
+}
+
+.icon-group:before {
+    content: "\e893";
+}
+
+.icon-group-dialog:before {
+    content: "\e8fd";
+}
+
+.icon-reload:before {
+    content: "\e660";
+}
+
+/*个人办公-我接收的代办事项*/
+.icon-transfer:before {
+    content: "\e89f";
+}
+
+/*公文子系统_接收公文*/
+.icon-move:before {
+    content: "\e657";
+    font-size: 14px;
+}
+
+.icon-folder:before {
+    content: "\e680";
+    font-size: 14px;
+}
+
+.icon-copyAdd:before {
+    content: "\e89e";
+    font-size: 14px;
+}
+
+.icon-writemail:before {
+    content: "\e878";
+}
+
+.icon-trash:before {
+    content: "\e65d";
+}
+
+.icon-transmit:before {
+    content: "\e6ca";
+}
+
+.icon-preview:before {
+    content: "\e87e";
+    font-size: 14px;
+}
+
+.icon-dimension:before {
+    content: "\e744";
+}
+
+.icon-relation:before {
+    content: "\e898";
+    font-size: 14px;
+}
+
+.icon-account:before {
+    content: "\e6ce";
+}
+
+.icon-window2:before {
+    content: "\ed33";
+}
+
+.icon-receive:before {
+    content: "\e6a7";
+}
+
+.icon-sender:before {
+    content: "\e6a7";
+}
+
+.icon-init:before {
+    content: "\e68e";
+}
+
+.icon-agree:before {
+    content: "\e6df";
+    font-size: 14px;
+}
+
+.icon-abstain:before {
+    content: "\e6ce";
+    font-size: 14px;
+}
+
+.icon-to-receive:before {
+    content: "\e69a";
+}
+
+.icon-ok:before {
+    content: "\e69a";
+    font-size: 14px;
+}
+
+.icon-cancel:before {
+    content: "\e8f5";
+    font-size: 14px;
+}
+
+.icon-showTrace:before {
+    content: "\e673";
+    font-size: 14px;
+}
+
+.icon-hideTrace:before {
+    content: "\e673";
+    font-size: 14px;
+}
+
+.icon-bpm-draft:before {
+    content: "\e891";
+    font-size: 14px;
+}
+
+.icon-endEvent:before {
+    content: "\e662";
+    font-size: 14px;
+}
+
+.icon-addMsgPerson:before {
+    content: "\e896";;
+    font-size: 14px;
+}
+
+.icon-parameter:before {
+    content: "\e87f";
+    font-size: 14px;
+}
+
+.icon-reportView:before {
+    content: "\e87e";
+    font-size: 14px;
+}
+
+.icon-readedMsg:before {
+    content: "\e6d8";
+    font-size: 14px;
+}
+
+.icon-fullscreen:before {
+    content: "\e673";
+    font-size: 14px;
+}
+
+.icon-newMsg:before {
+    content: "\e6ea";
+    font-size: 14px;
+}
+
+.icon-attachAdd:before {
+    content: "\e6d1";
+    font-size: 14px;
+}
+
+.icon-check:before {
+    content: "\e81b";
+    font-size: 14px;
+}
+
+.icon-uncheck:before {
+    content: "\e81a";
+    font-size: 14px;
+}
+
+.icon-leader:before {
+    content: "\e8f7";
+    font-size: 14px;
+}
+
+.icon-center:before {
+    content: "\e690";
+    font-size: 14px;
+}
+
+.icon-calendar:before {
+    content: "\e8f8";
+    font-size: 14px;
+}
+
+.icon-emailAdd:before {
+    content: "\e660";
+    font-size: 14px;
+}
+
+.icon-goto:before {
+    content: "\e6ec";
+    font-size: 14px;
+}
+
+.icon-fullscreen:before {
+    content: "\e787";
+    font-size: 14px;
+}
+
+.icon-downgrade:before {
+    content: "\e727";
+    font-size: 14px;
+}
+
+.icon-baobiao-export:before {
+    content: "\e6ca";
+    font-size: 14px;
+}
+
+.icon-setting:before {
+    content: "\e8d5";
+}
+
+.mini-buttonedit-icon {
+    font-family: "iconfont" !important;
+    font-style: normal;
+    font-size: 14px;
+}
+
+/* .mini-buttonedit-icon:before  { content: "\e6f6"; font-size:14px;font-weight:bold;} */
+.icon-help:before {
+    content: "\e600";
+    font-size: 14px;
+}
+
+.icon-printer:before {
+    content: "\e6f7";
+    font-size: 14px;
+}
+
+.icon-report:before {
+    content: "\e70b";
+    font-size: 14px;
+}
+
+.icon-pdf:before {
+    content: "\e8d1";;
+}
+
+.icon-doc:before {
+    content: "\e704";
+    font-size: 14px;
+}
+
+.icon-excel:before {
+    content: "\e702";
+    font-size: 14px;
+}
+
+.icon-addMsgGroup:before {
+    content: "\e895";
+    font-size: 14px;
+}
+
+.icon-sendMsg:before {
+    content: "\e67d";
+    font-size: 14px;
+}
+
+.icon-Reset:before {
+    content: "\e660";
+    font-size: 14px;
+}
+
+.icon-move-in:before {
+    content: "\e657";
+    font-size: 14px;
+}
+
+.icon-read:before {
+    content: "\e8ff";
+    font-size: 14px;
+}
+
+.icon-hide:before {
+    content: "\e900";
+    font-size: 14px;
+}
+
+.icon-copydown:before {
+    content: "\e718";
+    font-size: 14px;
+}
+
+.icon-copyup:before {
+    content: "\e71b";
+    font-size: 14px;
+}
+
+.icon-select:before {
+    content: "\e7e9";
+    font-size: 14px;
+}
+
+.icon-grant-in:before {
+    content: "\e688";
+    font-size: 14px;
+}
+
+.icon-edit-in:before {
+    content: "\e66a";
+}
+
+.icon-mailconnect:before {
+    content: "\e6af";
+    font-size: 14px;
+}
+
+.icon-send:before {
+    content: "\e6df";
+    font-size: 14px;
+}
+
+.mini-button-ok:before {
+    content: "\e6df";
+    font-size: 14px;
+}
+
+.icon-print:before {
+    content: "\e6f7";
+    font-size: 14px;
+}
+
+.icon-script:before {
+    content: "\e8a4";
+    font-size: 14px;
+}
+
+.icon-zoomin:before {
+    content: "\e6e5";
+    font-size: 14px;
+}
+
+.icon-tabGrant:before {
+    content: "\e725";
+    font-size: 14px;
+}
+
+.icon-no:before {
+    content: "\e728";
+    font-size: 14px;
+}
+
+.icon-timeinput:before {
+    content: "\e74d";
+    font-size: 14px;
+}
+
+.icon-selectAll:before {
+    content: "\e72a";
+    font-size: 14px;
+}
+
+.icon-archives:before {
+    content: "\e709";
+    font-size: 14px;
+}
+
+.icon-copy:before {
+    content: "\e887";
+    font-size: 14px;
+}
+
+.icon-startEvent:before {
+    content: "\e8c7";
+}
+
+.icon-dataStructure:before {
+    content: "\e8d4";
+    font-size: 14px;
+}
+
+.icon-associationForm:before {
+    content: "\e8d8";
+    font-size: 14px;
+}
+
+.icon-formAdd:before {
+    content: "\e892";
+    font-size: 14px;
+}
+
+.icon-debug-white:before {
+    content: "\e6af";;
+    font-size: 14px;
+}
+
+.icon-boSet:before {
+    content: "\e872";
+    font-size: 14px;
+}
+
+.icon-add_newStyle:before {
+    content: "\e7d7";
+    font-size: 14px;
+}
+
+.icon-monitor:before {
+    content: "\e75c";
+    font-size: 14px;
+}
+
+.icon-eventScript:before {
+    content: "\e757";
+    font-size: 14px;
+}
+
+.icon-nodeReminder:before {
+    content: "\e75b";
+    font-size: 14px;
+}
+
+.icon-uploadPublic:before {
+    content: "\e760";
+    font-size: 14px;
+}
+
+.icon-File:before {
+    content: "\e87c";
+    font-size: 14px;
+}
+
+.icon-meeting:before {
+    content: "\e87d";
+    font-size: 14px;
+}
+
+.icon-sendOut:before {
+    content: "\e766";
+    font-size: 14px;
+}
+
+.icon-sendedOut:before {
+    content: "\e6d8";
+    font-size: 14px;
+}
+
+.icon-empty:before {
+    content: "\e767";
+    font-size: 14px;
+}
+
+.icon-script-white:before {
+    content: "\e746";;
+    font-size: 14px;
+}
+
+.icon-release:before {
+    content: "\e6df";
+    font-size: 14px;
+}
+
+.icon-Logmsg:before {
+    content: "\e65c";
+    font-size: 14px;
+}
+
+.icon-See:before {
+    content: "\e6e7";
+    font-size: 14px;
+}
+
+.icon-task:before {
+    content: "\e619";
+    font-size: 14px;
+}
+
+.icon-mail:before {
+    content: "\e719";
+    font-size: 14px;
+}
+
+.icon-document:before {
+    content: "\e665";
+    font-size: 14px;
+}
+
+
+.icon-create, .icon-edit, .icon-detail, .icon-remove, .icon-export, .icon-import, .icon-refresh, .icon-upload, .icon-search, .icon-clear, .icon-unlock, .icon-lock, .icon-end, .icon-suspend, .icon-activate, .icon-ch-user, .icon-Relieve-user, .icon-commute, .icon-sav, .icon-mgr, .icon-prev, .icon-next, .icon-flow-deploy, .icon-info, .icon-flow, .icon-form, .icon-var, .icon-user, .icon-debug, .icon-grant, .icon-download, .icon-rowbefore, .icon-rowafter, .icon-btn-mgr, .icon-home, .icon-mailUp, .icon-mailDown, .icon-reload, .icon-group, .icon-transfer, .icon-move, .icon-trash, .icon-writemail, .icon-transmit, .icon-flow-design, .icon-preview, .icon-start, .icon-dimension, .icon-relation, .icon-account, .icon-rank, .icon-window2, .icon-copyAdd, .icon-draft, .icon-sender, .icon-receive, .icon-window, .icon-agree, .icon-abstain, .icon-property, .icon-handle, .icon-bpm-draft, .icon-endEvent, .icon-addMsgPerson, .icon-readedMsg, .icon-fullscreen, .icon-modify-pwd, .icon-setting, .icon-ok, .icon-close, .icon-help, .icon-printer, .icon-report, .icon-pdf, .icon-doc, .icon-excel, .icon-attachAdd, .icon-addMsgGroup, .icon-sendMsg, .icon-read, .icon-hide, .icon-copydown, .icon-copyup, .icon-select, .icon-mailconnect, .icon-send, .icon-script, .icon-cancel, .icon-add, .icon-timeinput, .icon-archives, .icon-startEvent, .icon-add_newStyle, .icon-monitor {
+    background: none !important
+}
+
+/*-----控件按钮 start---------*/
+.icon-user-button .mini-buttonedit-icon, .icon-group-button .mini-buttonedit-icon, .icon-dep-button .mini-buttonedit-icon {
+    background: none !important;
+}
+
+.icon-html:before {
+    content: "\e8d7";
+    font-size: 14px;
+}
+
+
+.icon-user-button .mini-buttonedit-icon:before {
+    content: "\ec4d";
+    font-size: 14px;
+
+}
+
+.icon-group-button .mini-buttonedit-icon:before {
+    content: "\e777";
+    font-size: 14px;
+}
+
+.icon-dep-button .mini-buttonedit-icon:before {
+    content: "\e853";
+    font-size: 14px;
+}
+
+/*-----控件按钮  end---------*/
+
+.icon-groups {
+    background: url(icons/groups.png) no-repeat;
+}
+
+.icon-department {
+    background: url(icons/department.png) no-repeat 20px;
+}
+
+.icon-calendar {
+    /* 	background: url(icons/calendar.png) no-repeat 20px; */
+}
+
+.icon-method:before {
+    content: "\e746";
+    font-size: 14px;
+}
+
+.icon-libary:before {
+    content: "\e639";
+
+    font-size: 14px;
+}
+
+.icon-report:before {
+    content: "\e81f";
+    font-size: 14px;
+}
+
+.icon-dic:before {
+    content: "\e81c";
+    font-size: 14px;
+}
+
+.icon-dingshi:before {
+    content: "\e822";
+    font-size: 14px;
+}
+
+.icon-rili1:before {
+    content: "\e821";
+    font-size: 14px;
+}
+
+.icon-wendang2:before {
+    content: "\e820";
+    font-size: 14px;
+}
+
+.icon-subsys:before {
+    content: "\e823";
+    font-size: 14px;
+}
+
+.icon-tool:before {
+    content: "\e73c";
+
+    font-size: 14px;
+}
+
+
+.icon_disabled:before {
+    font-size: 14px;
+}
+
+
+.icon-gongdan01:before {
+    content: "\e798";
+    font-size: 14px;
+}
+
+.icon-xiaoxi01:before {
+    content: "\e79a";
+    font-size: 14px;
+}
+
+.icon-caogao01:before {
+    content: "\e79b";
+    font-size: 14px;
+}
+
+.icon-youxiang01:before {
+    content: "\e797";
+    font-size: 14px;
+
+}
+
+/*改版新icon*/
+/*改版新icon*/
+/*改版新icon*/
+
+/*一级菜单*/
+
+
+.icon-gongzuotai:before {
+    content: "\e7d8";
+}
+
+.icon-gerenshezhi:before {
+    content: "\e7d9";
+}
+
+.icon-renwugenzong:before {
+    content: "\e7da";
+}
+
+.icon-gongdanguanli:before {
+    content: "\e7be";
+}
+
+.icon-zuzhigaunli:before {
+    content: "\e79f";
+}
+
+.icon-liuchenggaunli:before {
+    content: "\e7a0";
+}
+
+.icon-xitongpeizhi:before {
+    content: "\e7b1";
+}
+
+.icon-jichushuju:before {
+    content: "\e7a2";
+}
+
+/*二级菜单*/
+/*工单办理*/
+.icon-xinzengshenqing:before {
+    content: "\e7dc";
+}
+
+.icon-shixiang:before {
+    content: "\e79c";
+}
+
+.icon-chaosonggongdan:before {
+    content: "\e7b3";
+}
+
+.icon-gongdancaogao:before {
+    content: "\e7cd";
+}
+
+.icon-wodexiaoxi:before {
+    content: "\e79a";
+}
+
+.icon-liuchengdaili:before {
+    content: "\e7a1";
+}
+
+.icon-jieshoudaiban:before {
+    content: "\e7d6";
+}
+
+.icon-zhuanjiaodaiban:before {
+    content: "\e7d3";
+}
+
+.icon-liuchengshixiang:before {
+    content: "\e7d5";
+}
+
+.icon-faqiliuc:before {
+    content: "\e79d";
+}
+
+.icon-shenpiliucheng:before {
+    content: "\e7a8";
+}
+
+.icon-youxinagguanli:before {
+    content: "\e797";
+}
+
+.icon-subordinate:before {
+    content: "\e8f2";
+}
+
+/*工单管理*/
+.icon-yewukaitongliebiao:before {
+    content: "\e7cf";
+}
+
+.icon-kanchadanliebiao:before {
+    content: "\e7a9";
+}
+
+/*组织管理*/
+.icon-zuzhiweidu:before {
+    content: "\e7c5";
+}
+
+.icon-yonghuguanli:before {
+    content: "\e7bf";
+}
+
+.icon-zhanghaoguanli:before {
+    content: "\e7ce";
+}
+
+.icon-yonghuzhanghao:before {
+    content: "\e7c1";
+}
+
+.icon-zuzhiguanxi:before {
+    content: "\e7ae";
+}
+
+.icon-zuzhizongheguanli:before {
+    content: "\e79e";
+}
+
+.icon-liuchengrukou:before {
+    content: "\e7ba";
+}
+
+.icon-sehzhipeizhi:before {
+    content: "\e7c7";
+}
+
+.icon-jiejuefangan:before {
+    content: "\e7a3";
+}
+
+.icon-liuchengshili:before {
+    content: "\e7d2";
+}
+
+.icon-daibanrenwu:before {
+    content: "\e889";
+}
+
+.icon-shoujibiaodna:before {
+    content: "\e7b0";
+}
+
+.icon-renyuanjiaoben:before {
+    content: "\e7c4";
+}
+
+.icon-biaodanfangan:before {
+    content: "\e7bd";
+}
+
+.icon-zidingyiduihuakuang:before {
+    content: "\e7a7";
+}
+
+.icon-ziingyiliebiao:before {
+    content: "\e7c8";
+}
+
+.icon-xitongguanli02:before {
+    content: "\e7ab";
+}
+
+.icon-menhuguanli:before {
+    content: "\e7af";
+}
+
+.icon-weixingongzhonghao:before {
+    content: "\e7cb";
+}
+
+.icon-geren:before {
+    content: "\e7cc";
+}
+
+.icon-LDAPguanli:before {
+    content: "\e7c2";
+}
+
+.icon-jituankehu:before {
+    content: "\e7b4";
+}
+
+.icon-louyuguanli:before {
+    content: "\e7a6";
+}
+
+.icon-jigouleixingguanli:before {
+    content: "\e7c6";
+}
+
+.icon-jigouleixing:before {
+    content: "\e7d1";
+}
+
+
+.icon-wodeshenqing:before {
+    content: "\e7dd";
+}
+
+.icon-wodechuli:before {
+    content: "\e7e0";
+}
+
+.icon-wodeyuedu:before {
+    content: "\e7e1";
+}
+
+.icon-wodeweituo:before {
+    content: "\e7de";
+}
+
+.icon-quanbuliucheng:before {
+    content: "\e7e5";
+}
+
+.icon-gerenxingxin:before {
+    content: "\e7e4";
+}
+
+.icon-xiugaimima:before {
+    content: "\e7e3";
+}
+
+.icon-changjianyijian:before {
+    content: "\e7e7";
+}
+
+.icon-waichudaili:before {
+    content: "\e7e8";
+}
+
+
+/*topIcon*/
+
+.icon-Personal:before {
+    content: "\e7ff";
+}
+
+.icon-News:before {
+    content: "\e801";
+}
+
+.icon-Mailbox:before {
+    content: "\e800";
+}
+
+.icon-Maximization:before {
+    content: "\e7fd";
+}
+
+.icon-Minimize:before {
+    content: "\e7fe";
+}
+
+.icon-SignOut:before {
+    content: "\e7fc";
+}
+
+
+/*首页消息盒图标*/
+.icon-jigou:before {
+    content: "\e7c6";
+}
+
+.icon-zhaobiao:before {
+    content: "\e804";
+}
+
+.icon-icon-:before {
+    content: "\e806";
+}
+
+.icon-jingbiaozhong:before {
+    content: "\e808";
+}
+
+.icon-project-bid:before {
+    content: "\e807";
+}
+
+
+/*微信公众号*/
+.icon-publicEdit:before {
+    content: "\e80b";
+}
+
+.icon-fansAD:before {
+    content: "\e80a";
+}
+
+.icon-materialAD:before {
+    content: "\e804";
+}
+
+.icon-articleAD:before {
+    content: "\e805";
+}
+
+.icon-link:before {
+    content: "\e86a";
+}
+
+.icon-card:before {
+    content: "\e807";
+}
+
+.icon-VIP:before {
+    content: "\e808";
+}
+
+.icon-storeAD:before {
+    content: "\e809";
+}
+
+.icon-More:before {
+    content: "\e806";
+}
+
+
+/*邮件*/
+
+.icon-readedMail:before {
+    content: "\e80c";
+}
+
+.icon-normal:before {
+    content: "\e810";
+}
+
+.icon-important:before {
+    content: "\e80f";
+}
+
+.icon-veryImportant:before {
+    content: "\e80e";
+}
+
+
+/*首页图标*/
+.icon-index_icon:before {
+    content: "\e81e";
+}
+
+.icon-success:before {
+    content: "\e880";
+}
+
+/*消息盒子*/
+.icon-card_Modular:before {
+    content: "\e842";
+}
+
+.icon-card_Integrate:before {
+    content: "\e837";
+}
+
+.icon-card_DAS:before {
+    content: "\e83b";
+}
+
+.icon-card_engine:before {
+    content: "\e840";
+}
+
+.icon-card_form_edit:before {
+    content: "\e83a";
+}
+
+.icon-card_Dept:before {
+    content: "\e835";
+}
+
+.icon-card_pen:before {
+    content: "\e83e";
+}
+
+.icon-card_reporting:before {
+    content: "\e834";
+}
+
+.icon-card_data:before {
+    content: "\e844";
+}
+
+.icon-card_framework:before {
+    content: "\e843";
+}
+
+.icon-card_cloud:before {
+    content: "\e841";
+}
+
+.icon-card_survey:before {
+    content: "\e83f";
+}
+
+.icon-card_editor:before {
+    content: "\e83d";
+}
+
+.icon-card_commodity:before {
+    content: "\e83c";
+}
+
+.icon-card_agent:before {
+    content: "\e839";
+}
+
+.icon-card_message:before {
+    content: "\e838";
+}
+
+.icon-card_agency:before {
+    content: "\e836";
+}
+
+.icon-card_news:before {
+    content: "\e833";
+}
+
+
+.icon-essence:before {
+    content: "\e8a8";
+}
+
+.icon-pictureDelete:before {
+    content: "\e8ca";
+}
+
+.icon-notEssence:before {
+    content: "\e8cb";
+}
+
+.icon-pictureAdd:before {
+    content: "\e8aa";
+}
+
+.icon-lower:before {
+    content: "\e8ce";
+}
+
+.icon-wxClose:before {
+    content: '\e672';
+}
+
+.icon-sc-lower:before {
+    content: '\e713';
+}
+
+.icon-readonly:before {
+    content: '\e8f9';
+}
+
+.icon-require:before {
+    content: '\e8fa';
+}
+
+.icon-hidden:before {
+    content: '\e8fb';
+}
+
+.icon-tips-Close:before {
+    content: '\e8fc';
+}
+
+.icon-approve:before {
+    content: "\e6b3";
+}
+
+.icon-invalid:before {
+    content: "\e8ef";
+}
+
+.icon-flowimg:before {
+    content: "\e81d";
+}
+
+
+.icon-dep:before {
+    content: "\e853";
+}
+
+.mini-tree-icon {
+
+}
+
+.icon-varchar:before {
+    content: "\e902";
+}
+
+.icon-number:before {
+    content: "\e903";
+}
+
+.icon-clob:before {
+    content: "\e904";
+}
+
+.icon-date:before {
+    content: "\e901";
+}
+
+.icon-table:before {
+    content: "\e77a";
+
+}
+
+.icon-word:before {
+    content: "\e905";
+
+}
+
+/** 流程图标 **/
+
+.icon-reject:before {
+    content: "\e906";
+}
+
+.icon-commute:before {
+    content: "\e7f4";
+}
+
+.icon-discard:before {
+    content: "\e907";
+}
+
+.icon-reply:before {
+    content: "\e908";
+}
+
+.icon-revoke:before {
+    content: "\e909";
+}
+
+.icon-urge:before {
+    content: "\e758";
+}
+
+
+.size-18:before {
+    font-size: 14px;
+}
+
+/*新增业务表单视图*/
+.icon-circle-arrow-bottom:before {
+    content: "\e812";
+}
+
+.icon-geren5:before {
+    content: "\e7e4";
+}
+
+.icon-kehu-copy:before {
+    content: "\e7b4";
+}
+
+.icon-rili2:before {
+    content: "\e82b";
+}
+
+.icon-jiantou4:before {
+    content: "\e712";
+}
+
+.icon-richeng:before {
+    content: "\e61b";
+}
+
+.icon-zuzhiguanli1:before {
+    content: "\e776";
+}
+
+.icon-eye-hide:before {
+    content: "\e6d6";
+}
+
+.icon-daochu2:before {
+    content: "\e851";
+}
+
+.icon-mokuaiicon-:before {
+    content: "\e7d4";
+}
+
+.icon-yincangbukejian:before {
+    content: "\e8fb";
+}
+
+.icon-tupian1:before {
+    content: "\e90a";
+}
+
+.icon-danxuanxuanzhong:before {
+    content: "\e907";
+}
+
+.icon-duoxuanshixin:before {
+    content: "\e908";
+}
+
+.icon-yihuifu1:before {
+    content: "\e80d";
+}
+
+.icon-0802dbhtbgsq:before {
+    content: "\e7dd";
+}
+
+.icon-shenpi:before {
+    content: "\e6b3";
+}
+
+.icon-tiankong:before {
+    content: "\e909";
+}
+
+.icon-buchongiconsvg14:before {
+    content: "\e703";
+}
+
+
+/*
+*新增图标
+*
+*新增图标时  要看看有没有重复的  不要搜索名字；
+*而是 直接搜索content里面的值；
+*如下： 直接搜 \e934 看看有没有重复的，有重复的就用以前有的；
+*
+*/
+.icon-fangyuan-:before {
+    content: "\e934";
+}
+.icon-zichan1:before {
+    content: "\e933";
+}
+.icon-yuangongtiaoxin:before {
+    content: "\e932";
+}
+.icon-huiyi1:before {
+    content: "\ec07";
+}
+.icon-qiandai:before {
+    content: "\e931";
+}
+.icon-baozhengjin:before {
+    content: "\e930";
+}
+.icon-fukuan:before {
+    content: "\e92f";
+}
+.icon-shenpi4:before {
+    content: "\e92e";
+}
+.icon-huanfu2:before {
+    content: "\e76a";
+}
+.icon-jieshu1:before {
+    content: "\e699";
+}
+.icon-huanfu:before {
+    content: "\e768";
+}
+.icon-zhanghao:before {
+    content: "\e7ea";
+}
+.icon-circle-arrow-right:before {
+    content: "\e935";
+}
+.icon-jiantou-copy-copy1:before {
+    content: "\e936";
+}
+
+.icon-daima1:before {
+    content: "\e90b";
+}
+.icon-workbench:before {
+    content: "\e922";
+}
+.icon-tiaojian:before {
+    content: "\e91a";
+}
+
+.icon-fuxuank:before {
+    content: "\e928";
+}
+.icon-radio:before {
+    content: "\e929";
+}
+/**/
+.icon-daima:before {
+    content: "\e8d7";
+}
+.icon-fuxuan:before {
+    content: "\e927";
+}
+.icon-xialakuang:before {
+    content: "\e915";
+}
+.icon-xialakuang1:before {
+    content: "\e917";
+}
+.icon-dizhi:before {
+    content: "\e910";
+}
+.icon-shuzi:before {
+    content: "\e918";
+}
+.icon-richeng4:before {
+    content: "\e666";
+}
+.icon-yuefen:before {
+    content: "\e92a";
+}
+.icon-shijian6:before {
+    content: "\e755";
+}
+.icon-fuwenben:before {
+    content: "\e914";
+}
+.icon-shangchuan2:before {
+    content: "\e7ed";
+}
+.icon-picture:before {
+    content: "\e921";
+}
+.icon-yincang:before {
+    content: "\e6d7";
+}
+.icon-bianji:before {
+    content: "\e66d";
+}
+.icon-zibiao:before {
+    content: "\e919";
+}
+.icon-createtask:before {
+    content: "\e91c";
+}
+.icon-caogao:before {
+    content: "\e742";
+}
+.icon-shenpi:before {
+    content: "\e6b3";
+}
+.icon-liucheng:before {
+    content: "\e638";
+}
+.icon-people:before {
+    content: "\e920";
+}
+.icon-group:before {
+    content: "\e91d";
+}
+.icon-bumen:before {
+    content: "\e853";
+}
+.icon-zdybtn:before {
+    content: "\e92b";
+}
+.icon-interactive:before {
+    content: "\e91e";
+}
+.icon-office:before {
+    content: "\e924";
+}
+.icon-workbench:before {
+    content: "\e922";
+}
+.icon-word:before {
+    content: "\e905";
+}
+.icon-touzantongpiao:before {
+    content: "\e90f";
+}
+.icon-word1:before {
+    content: "\e92c";
+}
+.icon-shenpi3:before {
+    content: "\e913";
+}
+.icon-daima1:before {
+    content: "\e90b";
+}
+.icon-kongjian_duohangwenben:before {
+    content: "\e90d";
+}
+
+
+/**/
+.icon-jia:before {
+    content: "\e93a";
+}
+
+.icon-xia-add:before {
+    content: "\e93b";
+}
+
+.icon-shang-add:before {
+    content: "\e93c";
+}
+.icon-quanxian2:before {
+    content: "\e939";
+}
+.icon-baocun7:before {
+    content: "\e938";
+}
+.icon-zhuanhuan:before {
+    content: "\e93d";
+}
+.icon-addressbook:before {
+    content: "\e93e";
+}
+.icon-brush:before {
+    content: "\e93f";
+}
+.icon-offline:before {
+    content: "\e941";
+}
+.icon-group:before {
+    content: "\e91d";
 }

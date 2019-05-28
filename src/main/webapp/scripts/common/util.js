@@ -97,5 +97,101 @@ function moveDownRow(id) {
     }
 }
 
+/**
+ * 表格中附件渲染
+ * @param e
+ * @returns
+ */
+function onFileRender(e){
+    var record = e.record;
+    var files =record[e.field];
+    if(!files) return "";
+    var s="";
+    var aryFile=mini.decode(files);
+  	for(var i=0;i<aryFile.length;i++){
+  		var file=aryFile[i];
+  		s+=getFile(file) ;
+  	}
+    return s;
+}
 
+/**
+ * 表格中图片渲染
+ * @param e
+ * @returns
+ */
+function onImgRender(e){
+    var record = e.record;
+    var img =record[e.field];
+    if(!img) return "";
+    
+    var imgJson=mini.decode(img);
 
+    var url="";
+    var val=imgJson.val;
+    if(imgJson.imgtype=="upload"){
+    	url=__rootPath+'/sys/core/file/previewFile.do?fileId='+ val;
+    }
+    else{
+    	if(val.startWith("http")){
+    		url=val;
+    	}
+    	else{
+    		url=__rootPath +val;
+    	}
+    }
+    var str="<img src='"+url+"' style='width:200px;height:auto'/>";
+    return str;
+}
+
+function getFile(file){
+	var fileName=file.fileName;
+	var aryDoc=["docx","doc","xlsx","xls","pptx","ppt"];
+	var aryImg=["jpg","png","bmp","gif"];
+	var ary=[];
+	
+	var fileId=file.fileId;
+	
+	if(isExtend(aryDoc, fileName)) { 
+		ary.push( '<a class="openImg" href="#" onclick="_openDoc(\''+fileId+'\');">'+fileName+'</a>');
+	}
+	else if(isExtend(aryImg, fileName)) { 
+		ary.push('<a class="openImg"  href="#" onclick="_openImg(\''+fileId+'\');">'+fileName+'</a>');
+	}
+	else if(fileName.indexOf('pdf')!=-1) { 
+		ary.push('<a class="openImg" href="#" onclick="_openPdf(\''+fileId+'\');">'+fileName+'</a>');
+	}
+	else{
+		ary.push('<a class="openImg" target="_blank" href="'+__rootPath+'/sys/core/file/previewFile.do?fileId='+fileId+'">'+fileName+'</a>');
+	}
+	ary.push("<a target='_blank' href='"+__rootPath+"/sys/core/file/download/"+fileId+".do'><image style='margin-left:5px;cursor:pointer;border:0;'   src='"+__rootPath+"/styles/icons/download.png'  /></a>");
+	return ary.join("");
+}
+
+function isExtend(aryExt,fileName){
+	for(var i=0;i<aryExt.length;i++){
+		var tmp=aryExt[i];
+		if(fileName.indexOf(tmp)!=-1){
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * 删除相关数据。
+ * @param rows
+ * @returns
+ */
+function removeData(rows){
+	for(var i=0;i<rows.length;i++){
+		var row=rows[i];
+		delete row.tenantId;
+		delete row.updateBy;
+		delete row.updateTime;
+		delete row.createTime;
+		delete row.createBy;
+		delete row.pkId;
+	}
+	return rows;
+}

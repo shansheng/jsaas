@@ -14,6 +14,26 @@ body{
 	font-size: 16px;
 }
 
+.fl {
+	float:left;
+}
+
+.fl .iconfont:before{
+	font-size:22px;
+	color: #fff;
+}
+
+.fl h1{
+	float:left;
+	font-height:bold;
+	font-size: 28px;
+}
+.icon-index_icon{
+	float: left;
+    font-size: 32px;
+    font-weight: bold;
+}
+
 *::before{font-weight: normal;}
 
 /******提醒框******/

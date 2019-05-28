@@ -39,6 +39,7 @@ function constructUrlParams(url,params){
 
 //搜索字段条件变化时
 function onSearchFieldChanged(e) {
+	
 	var valContainer= document.getElementById("fieldValContainer");
     var combo = e.sender;
     var comboData = combo.getData();
@@ -375,7 +376,11 @@ function searchFrm() {
     var inputAry=$("input",parent);
     searchByInput(inputAry);
 }
-
+/**
+ * 清空搜索列表的条件与搜索结果
+ * @param btn
+ * @returns
+ */
 function onClearList(btn){
 	var parent=$(btn.el).closest(".mini-toolbar");
 	var form=$("form",parent);
@@ -386,7 +391,6 @@ function onClearList(btn){
 	var controls=mini.getChildControls(parent[0]);
 	controls.forEach(function(obj){
 	    var type=obj.type;
-	    console.info(type);
 	    switch(type){
 	    	case "textbox":
 	    	case "datepicker":
@@ -423,7 +427,36 @@ function searchByInput(inputAry){
 	data.pageSize=grid.getPageSize();
     data.sortField=grid.getSortField();
     data.sortOrder=grid.getSortOrder();
-	grid.load(data);
+
+    var userIds = [];
+    if (typeof (group_userInfo) != "undefined" && group_userInfo && group_userInfo.groupId) {
+        if(group_userInfo.groupId ===1 ){
+            //选择有部门，但部门没有用户，则直接返回空
+            if(group_userInfo.userInfoList.length ==0)return;
+            //有选部门，部门内有用户
+            group_userInfo.isOsUserManager =true;
+            for(var i=0; i< group_userInfo.userInfoList.length; i++){
+                userIds.push(group_userInfo.userInfoList[i].userId);
+            }
+        }
+    }
+
+    if(typeof (group_userInfo) != "undefined" && group_userInfo && group_userInfo.isOsUserManager){
+        grid.load(data,function(result) {
+            var data =result.data;
+            var newData =[];
+            //根据搜索结果匹配过滤部门内用户ID
+            for(var i=0;data&&i<data.length;i++){
+                if(userIds.indexOf(data[i].userId) > -1){
+                    newData.push(data[i]);
+                }
+            }
+            var datagrid1=mini.get('#datagrid1');
+            datagrid1.setData(newData);
+        });
+    }else{
+        grid.load(data);
+    }
 }
 
 //清空查询条件
@@ -437,6 +470,13 @@ function clearSearch(){
 }
 
 function clearForm(){
+    if(typeof (group_userInfo) != "undefined" && group_userInfo){
+        group_userInfo = {
+            groupId:0,
+            userInfoList:[],
+            isOsUserManager:false
+        };
+    }
 	var parent=$(".search-form");
 	var inputAry=$("input",parent);
 	inputAry.each(function(i){
@@ -532,19 +572,19 @@ function addGridView(entityName) {
     	});
     	
     }
-    
-   
-
+    $(function(){
+    	 var frm=$("#searchForm");
+    	 if(frm.length==0) return;
+    	 var searchForm = new mini.Form("#searchForm"); 
+    	 var ary = searchForm.getFields();
+    	 for(var i=0;i<ary.length;i++){
+    		 ary[i].on("enter",onKeyEnter);
+    	 }
+    })
+  
     function onKeyEnter(e) {
-        search();
+    	searchFrm();
     }
-
-    function printCurPage() {
-        var LODOP = getLodop();
-        LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_全页");
-    LODOP.ADD_PRINT_HTM(0, 0, "100%", "100%", $('#datagrid1').html());
-    LODOP.PREVIEW();
-}
 
 //保存当前视图方案
 function saveCurGridView() {
@@ -611,7 +651,7 @@ function reSize(){
 	if($("#systree").length==1){
 		var layOut=$("#layout1");
    		var pHeight=layOut.height();
-   		$("#systree").height(pHeight-75);
+   		$("#systree").height(pHeight-90);
 	}   		
 }
 
@@ -630,34 +670,81 @@ function handGridButtons(el){
 		var parentDiv=$(".mini-grid-cell-inner",$(this));
 		var btns=parentDiv.children("span");
 		var length=btns.length;
-		if(length<=1) return true ;
-		var manageBtn=$("<div class='ops_btn'></div>");
-		var btnContainer=$("<div class='button-container'></div>");
-		for(var i=0;i<length;i++){
-			var btn=btns[i];
-			btnContainer.append(btn);
-		}
-		manageBtn.append(btnContainer);
-		parentDiv.append(manageBtn);
-		
+		/*if(length<0) return true ;*/
+		// 表格行间工具条；   --yangxin
+        var editBtnBox = $("<div class='editBtnBox'></div>")
+        var ops_btnOne = $("<span class='ops_btnOne'></span>")
+		var manageBtn=$("<div class='ops_btn'>更多</div>");
+		var btnContainer=$("<div class='buttonContainer'></div>");
+        if(length > 2){
+            for(var k = 0;k<length;k++){
+                if (k < 2 ){
+                    var btnOne1 = btns[k];
+                    ops_btnOne.append(btnOne1);
+                }else{
+                    var btn=btns[k];
+                    btnContainer.append(btn);
+                }
+            }
+            editBtnBox.append(ops_btnOne);
+            manageBtn.append(btnContainer);
+            manageBtn.attr("title","");
+            editBtnBox.append(manageBtn);
+        }else if( length <= 1){
+            ops_btnOne.addClass("iconOne");
+            ops_btnOne.append(btns[0]);
+            editBtnBox.empty();
+            editBtnBox.append(ops_btnOne);
+        } else {
+            for (var i = 0 ;i< length ;i++){
+                var btnOne2 = btns[i];
+                ops_btnOne.append(btnOne2);
+            }
+            editBtnBox.empty();
+            editBtnBox.append(ops_btnOne);
+        }
+        parentDiv.append(editBtnBox);
 		btnContainer.hide();
-		manageBtn.hoverDelay({hoverEvent:function(){
+		manageBtn.hoverDelay({hoverEvent:function(event){
+		    var _this = manageBtn;
+		        places(_this,event);
 				manageBtn.addClass("ops_active");
 				btnContainer.show();
 			},
 			outEvent:function(){
-				manageBtn.removeClass("ops_active");
+				manageBtn.removeClass("ops_active ops_location");
 				btnContainer.hide();
 			}
 		});
-	})
+	});
 }
-   	
+
+/*hover的时候根据其
+    鼠标的位置 与窗口的 高度差
+    和 子元素 高度的大小 判断
+    显示的方式 -----yangxin
+ */
+function places(This,event) {
+
+    var _this = This;
+    var e = window.event || event ;
+    var _y = e.clientY;
+    var chilrenHeight = _this.find(".buttonContainer").height() + 20;
+    var windowHeight = $(window).height();
+    if (windowHeight - _y < chilrenHeight) {
+        _this.addClass("ops_location");
+
+    }
+}
+
 $(function(){
 	if(!window.grid) return;
+	//是否显示表格控件中的按钮为工具栏
+/*	if(grid.isShowGridButtons) return;*/
 	grid.on("update",function(e){
 		handGridButtons(e.sender.el);
-	})
+	});
+
 });
    		
    		

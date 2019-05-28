@@ -1,0 +1,508 @@
+
+/*树的头部框距离*/
+.mini-layout-region-west > .mini-layout-region-header {
+	top: 0;
+	height: 50px;
+	padding: 0;
+	margin: 0;
+}
+
+/* 首页tab 默认状态*/
+.mini-tab
+{
+	border-radius:0;
+	border:none;
+	border-top: 0;
+	border-bottom: 2px solid transparent;
+	background:none;
+}
+	/*底边线*/
+.mini-tabs-space{
+	border-color: transparent;
+}
+	/*字体*/
+.mini-tabs-header .mini-tab-text{
+	font-size:14px;
+	color: #666;
+}
+
+	/* 首页tab 选中状态*/
+.mini-tabs-header-top .mini-tab-active {
+	background:#fff;
+	height: 22px;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+	border-bottom: 2px solid #3a82fa;
+}
+.mini-tab-active span.mini-tab-text{
+	color: #666;
+}
+	/*tab图标hover*/
+.mini-tab-close-hover
+{
+	background-color:#fff;
+}
+	/*tab间距*/
+.mini-tabs-space2 div{
+	width: 0px;
+}
+
+
+/*树里面图标 字体的默认颜色*/
+.sidemenu li.firstmenu ,
+.sidemenu i:before{
+	color: #6e829f;
+}
+/*树hover的颜色*/
+p.secondActive i:before,
+p.secondActive span{
+	color:#fff;
+}
+p.secondActive{
+	background:#22324c !important;
+}
+.sidemenu .firstmenu:hover>p{
+	background:none;
+}
+
+/*树的颜色*/
+.sidemenu .secondmenu>li>p,
+.sidemenu .threemenu{
+	background: #283b5b;
+}
+/*每一层树的距离*/
+.secondmenu > li > p > .iconfont{
+	margin-left: 30px;
+}
+.threemenu > li > p > .iconfont{
+	margin-left: 50px;
+}
+	/*树点击子元素行 颜色*/
+.sidemenu .firstmenu.active,
+.sidemenu .secondmenu>li.active>p,
+.sidemenu .threemenu li.active>p,
+.sidemenu .firstmenu.active>p{
+	background:#22324c;
+}
+.sidemenu .firstmenu>p,
+.sidemenu .threemenu li>p,
+.sidemenu .secondmenu>li>p{
+	border-left:5px solid transparent ;
+	box-sizing: border-box;
+}
+	/*点击行加载右边的蓝色竖线*/
+.sidemenu .firstmenu.active>p,
+.sidemenu .threemenu li.active>p,
+.sidemenu .secondmenu>li.active>p{
+	border-left:5px solid #3581ff ;
+	box-sizing: border-box;
+}
+	/*点击时 字与图标的颜色*/
+.active>p>span,
+.active>p>i:before{
+	color: #fff;
+}
+.active>p>.spread .horizontal,
+.active>p>.spread .vertical{
+	background: #fff;
+}
+
+	/*去掉下边*/
+.sidemenu .secondmenu>li>p,
+.sidemenu li.firstmenu>p,
+.sidemenu .threemenu li{
+	border-bottom: 0;
+}
+  /*图标的大小*/
+.sidemenu i:before,
+.threemenu > li > p > .iconfont:before{
+	font-size: 16px;
+}
+.sidemenu .firstmenu > p > span.spread{
+	margin-top: 10px;
+}
+.sidemenu p .spread {
+	float: right !important;
+	width: 20px;
+	height: 20px;
+	position: relative;
+	transition: all .3s;
+	margin-right: 6px;
+}
+.spread .horizontal,
+.spread .vertical{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	background: #6e829f;
+	border-radius: 2px;
+	transition: all .3s;
+}
+.spread .horizontal {
+	width: 12px;
+	height: 2px;
+	margin-left: -6px!important;
+	margin-top: -1px!important;
+
+}
+.spread .vertical {
+	width: 2px;
+	height: 12px;
+	margin-top: -6px!important;
+	margin-left: -1px!important;
+}
+
+
+.sidemenu .firstmenu.active>p:before {
+	color:#1eabfb;
+}
+.sidemenu .firstmenu.active>p>i:before,
+.sidemenu .firstmenu.active>p>span,
+.sidemenu .firstmenu.active>p>span>span{
+	color: #fff!important;
+}
+
+/*被影响的树的日历图标*/
+.sidemenu p .icon-rili1:before{
+	float:none;
+}
+
+
+/*按钮*/
+body a:hover.mini-button .mini-botton-allow{
+	background: url(../../../scripts/mini/miniui/themes/default/images/button/menu_arrow2.png) no-repeat center;
+}
+body a:hover.mini-button .mini-botton-allow{
+	background: url(../../../scripts/mini/miniui/themes/default/images/button/menu_arrow2.png) no-repeat center;
+}
+
+
+/*头部右上角工具条*/
+#headerBox{
+	height: 100%;
+	border-bottom: 1px solid #eef2f4;
+	box-sizing: border-box;
+	min-width: 920px;
+}
+#headerToolbar{
+	float: right;
+	font-size: 0;
+	margin-top: 10px;
+	padding-right: 30px;
+}
+#headerToolbar>li{
+	position: relative;
+	min-width: 30px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	display: inline-block;
+	font-size: 14px;
+	color: #555;
+	margin-left: 4px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+#headerToolbar>li i:before{
+	display: inline-block;
+	vertical-align:middle;
+	font-size: 20px;
+}
+#headerToolbar>li:hover{
+	color: #3a82fa;
+}
+.hideSkin{
+	display: none;
+	position: absolute;
+	width: 100px;
+	top: 34px;
+	left: -34px;
+	border-radius:2px ;
+	z-index: 9999;
+	-webkit-box-shadow: 0 0 5px #ccc;
+	-moz-box-shadow:  0 0 5px #ccc ;
+	box-shadow:  0 0 5px #ccc;
+	color: #555;
+}
+.hideSkin:before{
+	content: "◆";
+	display: inline-block;
+	color: #fff;
+	position: absolute;
+	height: 24px;
+	width: 100%;
+	text-align: center;
+	font-size: 40px;
+	line-height: 16px;
+	top: -9px;
+	left: 0;
+	z-index: 1;
+	text-shadow: 0 0 5px #ccc ;
+}
+.hideSkin>li{
+	position: relative;
+	line-height: 30px;
+	padding:0 6px;
+	background: #fff;
+	z-index: 2;
+
+}
+.hideSkin>li:hover{
+	cursor: pointer;
+	background: #f5f7fa;
+	color: #3a82fa;
+}
+.skinBtn:hover  .hideSkin{
+	display: block;
+}
+#headerToolbar .user{
+	padding: 0 6px;
+}
+#headerToolbar  #redDot{
+	width: 6px;
+	height: 6px;
+	background:#ff5f5f ;
+	border-radius: 50%;
+	position: absolute;
+	right: 4px;
+	top: 1px;
+	display: none;
+}
+/*#headerToolbar .result:hover .messagebox{
+	display: block;
+}*/
+#headerToolbar .result .messagebox{
+	display: none;
+	position: absolute;
+	z-index: 9999;
+	background: #fff;
+	right: -4px;
+	-webkit-box-shadow: 0 0 5px #ccc;
+	-moz-box-shadow:  0 0 5px #ccc ;
+	box-shadow:  0 0 5px #ccc;
+	margin-top: 4px;
+}
+
+#headerToolbar .result .messagebox:before{
+	content: "◆";
+	display: inline-block;
+	color: #fff;
+	position: absolute;
+	height: 24px;
+	width: 24px;
+	text-align: center;
+	font-size: 40px;
+	line-height: 16px;
+	top: -9px;
+	right: 6px;
+	z-index: 1;
+	text-shadow: 0 0 5px #ccc ;
+}
+#headerToolbar .result .messagebox>div{
+	position: relative;
+	z-index: 2;
+	background: #fff;
+	padding:20px 20px;
+	white-space: nowrap;
+	right: 0;
+}
+#userMessage{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: 1px solid #555;
+	line-height: 16px;
+	border-radius: 50%;
+	text-align: center;
+}
+#headerToolbar>li #userMessage:before{
+	font-size: 14px;
+}
+
+.result .message ,.result .messages{
+	color:#333;
+	width: 200px;
+	padding-left: 10px;
+
+	font-size: 14px;
+}
+.result .messagebox > div > span{
+	display: inline-block;
+	vertical-align: middle;
+}
+.result .messageIcon{
+	width:40px;
+	height:40px;
+	border-radius:50%;
+	background:#47aff9;
+	text-align: center;
+	line-height: 40px;
+}
+.result .message > p{
+	color:#38f;
+}
+.result .message span{
+	color:#38f;
+}
+.greenBg{
+	background:#00e09e;
+}
+.remind > span {
+
+	display:inline-block;
+}
+
+.messageIcon > i:before{
+	color:#fff;
+}
+a.remind{
+	text-align: left;
+	display: inline-block;
+	line-height: 40px;
+	width: 100%;
+}
+
+.user{
+	cursor: pointer;
+}
+
+/*首页logo*/
+#west.nav .mini-layout-region-body{
+	overflow: initial;
+	background: #283b5b;
+}
+.logoBoxs{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	background: #192333;
+	font-size: 0;
+}
+.logoBoxs .iconLogo{
+	display: inline-block;
+	width:40px;
+	height:32px;
+	/*border-radius: 50%;*/
+	background:url(../imgLogo/logo.png)  no-repeat;
+	background-size: 40px auto;
+	margin-right:8px;
+	margin-top: 10px;
+	margin-left: 12px;
+	vertical-align: top;
+}
+.logoBoxs span{
+	display: inline-block;
+	vertical-align: top;
+	font-size: 24px;
+	color: #fff;
+}
+
+/*左边区域折叠按钮层级*/
+.mini-layout-spliticon{
+	z-index: 999;
+}
+.mini-layout-split-west .mini-layout-spliticon-collapse{
+	left: -5px;
+	background-color: #f0f0f0;
+}
+
+/*	导航 */
+#headerNav{
+	float: left;
+	font-size: 0;
+	height: 49px;
+	line-height: 49px;
+	margin-left: 20px;
+	box-sizing: border-box;
+	/*overflow: hidden;*/
+}
+#headerNav>li{
+	font-size: 14px;
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0 15px;
+	box-sizing: border-box;
+	/*border-bottom: 2px solid transparent;*/
+	transition: all 0.3s;
+	color: #6d7892;
+	margin: 0 6px;
+	cursor: pointer;
+	border-radius: 20px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid transparent;
+}
+#headerNav>li:hover,
+#headerNav>li.act{
+	border-color: #3a82fa;
+	/*background: rgb(237, 246, 255);*/
+	/*background: rgb(217, 236, 255);*/
+	/*background: rgb(64, 158, 255);*/
+	color: #3a82fa;
+}
+
+#navMore i{
+	display: inline-block;
+	transition: all 0.3s;
+}
+#navMore:hover>i{
+	transform: rotate(180deg);
+}
+#navMore:hover .moreSelect{
+	display:block;
+}
+#navMore{
+	position: relative;
+}
+.navMoreBoxs{
+	position: absolute;
+	z-index: 999;
+	width: auto;
+	left: 0;
+	margin-top: -4px;
+}
+.moreSelect{
+	display: none;
+	background: #fff;
+	box-shadow: 0 0 5px #ccc;
+	padding: 4px 0;
+	margin-top: 10px;
+	border-radius: 3px;
+}
+.moreSelect li{
+	white-space: nowrap;
+	width: auto;
+	color: #555;
+	line-height: 30px;
+	padding: 0 14px;
+}
+.moreSelect li:hover{
+	background: #f3f3f3;
+}
+.moreSelect li.act{
+	color:#3a82fa ;
+}
+/*首页头部树的折叠按钮*/
+#toggleBtn{
+	float: left;
+	margin-top: 15px;
+	margin-left: 12px;
+	height:18px;
+	width: 25px;
+	background: url(../../../scripts/mini/miniui/themes/default/images/button/toggleBtns.png) no-repeat;
+}
+#toggleBtn.btn_select{
+	background-position: -30px 0px;
+}
+.mini-layout-proxy{
+	width: 0;
+	padding: 0;
+	margin-left: -2px;
+}
+/*内容区域 */
+.mini-tabs-bodys{
+	/*margin: 10px;*/
+	/*padding: 15px;*/
+	background: #fff;
+}

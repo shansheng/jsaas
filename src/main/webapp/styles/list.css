@@ -1,22 +1,10 @@
 /*用于编写列表页面的样式定义*/
-html,body
-{
-    width:100%;
-    height:100%;
-    border:0;
-    margin:0;
-    padding:0;
-    overflow:auto;
-}
-
 .blue{
 	color:#44cef6;
 }
-
 .green{
 	color:#2edfa3;
 }
-
 .red{
 	color:#ff4c00;
 }
@@ -24,141 +12,24 @@ html,body
 .orange{
 	color:#ffa400;
 }
-
 .purple{
 	color:#8d4bbb;
 }
-
 .grey{
 	color:grey;
 }
-
-.search-form>ul {
-	margin:0px 0px 0px 0px;
-	padding: 0;
+.mini-sm-active body{
+	overflow:auto !important
 }
-
-.search-form>ul {
-	/*padding-left: 10px;*/
-	list-style: none;
-	border-bottom: 0px solid #fff;
-}
-
-.search-form ul>li {
-	display: inline-block;
-	padding: 3px 5px 0 5px;
-	margin-top: 2px;
-}
-
-.search-form ul>li:first-child {
-	/*padding-left: 5px;*/
-}
-
-.search-form li>span {
-	display: inline-block;
-	margin-bottom: -5px;
-	margin-right: 5px;
-	/*width: 90px;*/ 
-	text-align: right;
-	line-height: 12px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-/* .rest{ background:#eee;} */
-.mini-sm-active body{overflow:auto !important}
-.rx-grid-fit{
-	margin-top: 3px;
-}
-
-.mini-toolbar{
-	margin-bottom: 4px;
-}
-
 .mini-toolbar th a{
 	border: 1px solid #ececec;
 	border-radius:4px;
-	
 }
 .mini-toolbar th{
  background-color:#fff; 
 	text-align: left;
 }
-
-.mini-toolbar td{
-	margin-bottom:5px;
-}
-
-
-/* 列表工具导航条 */
-div.ops_btn {
-/* 	display: inline-block; */
-	z-index: 1000;
-	position:relative;
-	height:16px;
-	width: 16px;
-/* 	top:0px; */
-/* 	left:2px; */
-	margin: 0 auto;
-}
-
-div.ops_btn::before {
-	font-family: "iconfont" !important;
-	content:"\e812";
-	color:rgba(17, 20, 32, 0.47); 
-}
-
-ops_btn::before {
-	font-family: "iconfont" !important;
-	content:"\e812";
-	color:rgba(17, 20, 32, 0.47); 
-}
-
-
-div.ops_btn.ops_active::before {
-	font-family: "iconfont" !important;
-	content:"\e8f0";
-	padding: 0 !important;
-/* 	color:rgba(17, 20, 32, 0.47); */
-}
-
-div.button-container{
-	position:absolute;
-	height:23px;
-	left:16px;
-	top:-3px;
-	border: 1px solid #ccc;
-	border-radius:4px;
-	z-index: 10000;
-	background: #f8f8f8;
-}
-
-div.button-container span:before{
-	font-size:20px !important;
-	line-height: 24px;
-	text-align: center;
-}
-
-.actionIcons,.actionIcons .mini-grid-cell-inner{
-     overflow: visible !important; 
-}
-
 /* 分页工具条刷新按钮 */
 .mini-pager .mini-button-icon{
 	background-image: none !important; 
 }
-
-.mini-grid-row-selected .mini-grid-cell-inner{
-/* 	color: #000; */
-}
-
-
-
-
-
-
-
-
-
-
-
